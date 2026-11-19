@@ -502,7 +502,7 @@
                 </div>
 
                 <div>
-                    <span class="inline-block text-xs font-bold text-teal-700 bg-teal-50 border border-teal-200 px-3 py-1 rounded-full">Version 2.3.0 (Study-Year Edition)</span>
+                    <span class="inline-block text-xs font-bold text-teal-700 bg-teal-50 border border-teal-200 px-3 py-1 rounded-full">Version 2.3.1 (Dentistry 6-Year Edition)</span>
                     <h2 class="text-lg font-bold text-navy-900 mt-2">ລະບົບລາຍງານສະຖິຕິນັກສຶກສາ ມວສຊ</h2>
                     <p class="text-xs text-slate-500 mt-1">ມະຫາວິທະຍາໄລວິທະຍາສາດສຸຂະພາບແຫ່ງຊາດ (ມວສຊ)</p>
                 </div>
@@ -510,7 +510,7 @@
                 <div class="bg-slate-50 rounded-2xl p-4 text-left space-y-2.5 border border-slate-100 text-xs">
                     <div class="flex justify-between py-1 border-b border-slate-200/70">
                         <span class="text-slate-500">ເວີຊັນລະບົບ (App Version):</span>
-                        <span class="font-bold text-navy-900">v2.3.0-study-year</span>
+                        <span class="font-bold text-navy-900">v2.3.1-dent-6y</span>
                     </div>
                     <div class="flex justify-between py-1 border-b border-slate-200/70">
                         <span class="text-slate-500">ອັບເດດຂໍ້ມູນລ່າສຸດ:</span>
@@ -529,9 +529,9 @@
                 <div class="text-left space-y-1.5">
                     <h4 class="text-xs font-bold text-navy-900">ບັນທຶກການພັດທະນາ (Release Notes):</h4>
                     <ul class="text-xs text-slate-600 space-y-1 list-disc list-inside">
-                        <li>ແຍກສະຖິຕິນັກສຶກສາໃນແຕ່ລະສາຂາອອກເປັນແຕ່ລະປີຮຽນ ຕາມໄລຍະເວລາຂອງແຕ່ລະຫຼັກສູດ</li>
-                        <li>ຮອງຮັບການປ່ຽນ/ເລື່ອນປີຮຽນຂອງສາຂາພາຍຫຼັງໄດ້ຢ່າງຍືດຫຍຸ່ນ</li>
-                        <li>ຮັກສາໂຄງສ້າງຂໍ້ມູນ, ສິດ 7 ບັນຊີ ແລະ ການຊິ້ງຂໍ້ມູນຄົບຖ້ວນ</li>
+                        <li>ກຳນົດຫຼັກສູດປະລິນຍາຕີ ສາຂາ ທັນຕະແພດສາດ ເປັນ 6 ປີ ແຍກຈາກປະລິນຍາຕີອື່ນໆ (5 ປີ)</li>
+                        <li>ແຍກສະຖິຕິນັກສຶກສາໃນແຕ່ລະສາຂາອອກເປັນແຕ່ລະປີຮຽນ ແລະ ປ່ຽນປີຮຽນພາຍຫຼັງໄດ້</li>
+                        <li>Admin ສາມາດກຳນົດຈຳນວນປີຮຽນຂອງແຕ່ລະຫຼັກສູດ ແລະ ສາຂາພິເສດໄດ້ເອງ</li>
                     </ul>
                 </div>
             </div>
@@ -559,7 +559,7 @@
                 </button>
             </div>
 
-            <!-- ກ່ອງກຳນົດຈຳນວນປີຮຽນຕາມຫຼັກສູດ (ສະເພາະ Admin ເທົ່ານັ້ນ) -->
+            <!-- ກ່ອງກຳນົດຈຳນວນປີຮຽນຕາມຫຼັກສູດ ແລະ ສາຂາພິເສດ (ສະເພາະ Admin ເທົ່ານັ້ນ) -->
             <div id="adminProgramYearConfigBox" class="hidden bg-amber-50/90 border-b border-amber-200 px-5 py-3 space-y-2">
                 <div class="flex items-center justify-between">
                     <span class="text-[11px] font-extrabold text-amber-900 flex items-center gap-1">
@@ -570,7 +570,7 @@
                         ບັນທຶກຈຳນວນປີ
                     </button>
                 </div>
-                <div id="adminYearLimitInputs" class="grid grid-cols-2 gap-1.5 max-h-28 overflow-y-auto pr-0.5">
+                <div id="adminYearLimitInputs" class="grid grid-cols-2 gap-1.5 max-h-32 overflow-y-auto pr-0.5">
                     <!-- Populated dynamically for Admin -->
                 </div>
             </div>
@@ -818,19 +818,22 @@
             POSTGRAD_STATS: 'uhs_postgrad_stats_v5_study_years',
             POSTGRAD_ORG: 'uhs_postgrad_org_v2',
             POSTGRAD_NEWS: 'uhs_postgrad_news_v2',
-            UNDERGRAD_STATS: 'uhs_undergrad_stats_v3_study_years',
+            UNDERGRAD_STATS: 'uhs_undergrad_stats_v4_dent6y',
             UNDERGRAD_ORG: 'uhs_undergrad_org_v1',
             UNDERGRAD_NEWS: 'uhs_undergrad_news_v1',
             LAST_UPDATED: 'uhs_last_updated_v1',
-            PROGRAM_YEAR_LIMITS: 'uhs_program_year_limits_v1'
+            PROGRAM_YEAR_LIMITS: 'uhs_program_year_limits_v2_dent6y'
         };
 
         /**
-         * ກຳນົດຈຳນວນປີຮຽນສູງສຸດຂອງແຕ່ລະຫຼັກສູດຕາມມາດຕະຖານ (ສາມາດຖືກແກ້ໄຂໂດຍ Admin ພາຍຫຼັງ)
+         * ກຳນົດຈຳນວນປີຮຽນຂອງແຕ່ລະຫຼັກສູດ ແລະ ກໍລະນີພິເສດສະເພາະສາຂາ:
+         * - ຫຼັກສູດປະລິນຍາຕີ ປົກກະຕິ: 5 ປີ
+         * - ຫຼັກສູດປະລິນຍາຕີ ສາຂາ ທັນຕະແພດສາດ: 6 ປີ
          */
         const DEFAULT_PROGRAM_YEAR_LIMITS = {
             "ອະນຸປະລິນຍາ": 2,
             "ປະລິນຍາຕີ": 5,
+            "ປະລິນຍາຕີ::ສາຂາ ທັນຕະແພດສາດ": 6,
             "ຕໍ່ເນື່ອງປະລິນຍາຕີ": 2,
             "ແພດລົງເລີກຂະແໜງ": 2,
             "ປະລິນຍາໂທ": 2,
@@ -839,15 +842,44 @@
             "ປະລິນຍາເອກ": 2
         };
 
+        const PROGRAM_YEAR_DISPLAY_LABELS = {
+            "ອະນຸປະລິນຍາ": "ອະນຸປະລິນຍາ",
+            "ປະລິນຍາຕີ": "ປະລິນຍາຕີ (ທົ່ວໄປ)",
+            "ປະລິນຍາຕີ::ສາຂາ ທັນຕະແພດສາດ": "ປະລິນຍາຕີ • ທັນຕະແພດສາດ",
+            "ຕໍ່ເນື່ອງປະລິນຍາຕີ": "ຕໍ່ເນື່ອງປະລິນຍາຕີ",
+            "ແພດລົງເລີກຂະແໜງ": "ແພດລົງເລີກຂະແໜງ",
+            "ປະລິນຍາໂທ": "ປະລິນຍາໂທ",
+            "ແພດຊ່ຽວຊານ ຂັ້ນ 1": "ແພດຊ່ຽວຊານ ຂັ້ນ 1",
+            "ແພດຊ່ຽວຊານ ຂັ້ນ 2": "ແພດຊ່ຽວຊານ ຂັ້ນ 2",
+            "ປະລິນຍາເອກ": "ປະລິນຍາເອກ"
+        };
+
+        function isDentistryBachelorProgram(level, programName) {
+            const cleanProg = String(programName || '').trim();
+            return level === 'ປະລິນຍາຕີ' && (
+                cleanProg === 'ສາຂາ ທັນຕະແພດສາດ' ||
+                cleanProg.includes('ທັນຕະແພດສາດ')
+            );
+        }
+
+        function getProgramLimitKey(level, programName = '') {
+            if (isDentistryBachelorProgram(level, programName)) {
+                return "ປະລິນຍາຕີ::ສາຂາ ທັນຕະແພດສາດ";
+            }
+            return level;
+        }
+
         function loadProgramYearLimits() {
             try {
                 const raw = localStorage.getItem(STORAGE_KEYS.PROGRAM_YEAR_LIMITS);
                 const parsed = raw ? JSON.parse(raw) : {};
                 const merged = { ...DEFAULT_PROGRAM_YEAR_LIMITS };
-                Object.keys(parsed).forEach(level => {
-                    const val = parseInt(parsed[level], 10);
-                    if (!Number.isNaN(val) && val >= 1 && val <= 15) {
-                        merged[level] = val;
+                Object.keys(DEFAULT_PROGRAM_YEAR_LIMITS).forEach(key => {
+                    if (parsed[key] !== undefined) {
+                        const val = parseInt(parsed[key], 10);
+                        if (!Number.isNaN(val) && val >= 1 && val <= 15) {
+                            merged[key] = val;
+                        }
                     }
                 });
                 return merged;
@@ -865,13 +897,18 @@
             }
         }
 
-        function getMaxStudyYears(level) {
-            const val = parseInt(PROGRAM_YEAR_LIMITS[level], 10);
-            return (!Number.isNaN(val) && val >= 1 && val <= 15) ? val : 2;
+        function getMaxStudyYears(level, programName = '') {
+            const key = getProgramLimitKey(level, programName);
+            const val = parseInt(PROGRAM_YEAR_LIMITS[key], 10);
+            if (!Number.isNaN(val) && val >= 1 && val <= 15) {
+                return val;
+            }
+            const fallbackVal = parseInt(PROGRAM_YEAR_LIMITS[level], 10);
+            return (!Number.isNaN(fallbackVal) && fallbackVal >= 1 && fallbackVal <= 15) ? fallbackVal : 2;
         }
 
-        function getStudyYearOptions(level) {
-            const maxY = getMaxStudyYears(level);
+        function getStudyYearOptions(level, programName = '') {
+            const maxY = getMaxStudyYears(level, programName);
             const list = [];
             for (let y = 1; y <= maxY; y++) {
                 list.push(y);
@@ -879,18 +916,17 @@
             return list;
         }
 
-        function formatStudyYearLabel(yearNum, level) {
-            const maxY = getMaxStudyYears(level);
+        function formatStudyYearLabel(yearNum, level, programName = '') {
+            const maxY = getMaxStudyYears(level, programName);
             const safeYear = Math.min(Math.max(parseInt(yearNum, 10) || 1, 1), maxY);
             return `ປີທີ ${safeYear} / ${maxY} ປີ`;
         }
 
         /**
          * ແປງຂໍ້ມູນສາຂາໃຫ້ມີໂຄງສ້າງແຍກປີຮຽນ (studyYears: [{ year, female, male }])
-         * ໂດຍຄົງຕົວເລກລວມເດີມໄວ້ໃນປີທີ 1 ຖ້າຍັງບໍ່ທັນໄດ້ແຍກປີຮຽນ
          */
         function normalizeDegreeEntry(deg) {
-            const maxY = getMaxStudyYears(deg.level);
+            const maxY = getMaxStudyYears(deg.level, deg.program);
             if (Array.isArray(deg.studyYears) && deg.studyYears.length > 0) {
                 const cleaned = [];
                 for (let y = 1; y <= maxY; y++) {
@@ -939,7 +975,6 @@
             return dbObj;
         }
 
-        // ຟັງຊັນຈັດການວັນທີພາສາລາວ
         function getCurrentLaoDate() {
             const months = [
                 'ມັງກອນ', 'ກຸມພາ', 'ມີນາ', 'ເມສາ', 'ພຶດສະພາ', 'ມິຖຸນາ',
@@ -1766,7 +1801,7 @@
                     </div>
                     <span class="text-[11px] sm:text-xs font-bold text-navy-900 leading-tight mt-2">Version ລະບົບ</span>
                     <span class="mt-1.5 inline-block text-[10px] font-bold text-slate-600 bg-slate-100 border border-slate-200 px-2 py-0.5 rounded-full">
-                        v2.3.0
+                        v2.3.1
                     </span>
                 </button>
             `;
@@ -1825,8 +1860,7 @@
             document.getElementById('detailFemaleNum').textContent = formatNum(filteredStats.female);
             document.getElementById('detailMaleNum').textContent = formatNum(filteredStats.male);
 
-            // ສ້າງປຸ່ມກັ່ນຕອງປີຮຽນ
-            const maxYearsInFaculty = Math.max(2, ...faculty.degrees.map(d => getMaxStudyYears(d.level)));
+            const maxYearsInFaculty = Math.max(2, ...faculty.degrees.map(d => getMaxStudyYears(d.level, d.program)));
             const filterPillsEl = document.getElementById('studyYearFilterPills');
             let pillsHTML = `
                 <button type="button" onclick="setStudyYearFilter('all')" class="px-2.5 py-1 rounded-lg text-[11px] font-bold transition-colors cursor-pointer shrink-0 ${activeStudyYearFilter === 'all' ? 'bg-teal-700 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}">
@@ -1883,11 +1917,13 @@
                 branchCounter++;
                 const degAllStats = getDegreeTotals(d, 'all');
                 const degFilteredStats = getDegreeTotals(d, activeStudyYearFilter);
+                const progYears = getMaxStudyYears(d.level, d.program);
 
                 rowsHTML += `
                     <tr class="bg-slate-50/70">
                         <td class="py-2 pl-5 pr-2 font-bold text-navy-900 text-xs sm:text-sm leading-snug">
                             <span class="text-teal-700 font-extrabold mr-1">${branchCounter}.</span>${d.program}
+                            <span class="ml-1 inline-block text-[10px] font-bold text-sky-700 bg-sky-50 border border-sky-200 px-1.5 py-0.2 rounded">ຮຽນ ${progYears} ປີ</span>
                         </td>
                         <td class="py-2 px-2 text-center font-bold text-rose-600 text-xs">${formatNum(degFilteredStats.female)}</td>
                         <td class="py-2 px-2 text-center font-bold text-teal-700 text-xs">${formatNum(degFilteredStats.male)}</td>
@@ -1895,7 +1931,6 @@
                     </tr>
                 `;
 
-                // ສະແດງແຍກແຕ່ລະປີຮຽນພາຍໃນສາຂາ
                 d.studyYears.forEach((sy) => {
                     if (activeStudyYearFilter !== 'all' && Number(activeStudyYearFilter) !== Number(sy.year)) {
                         return;
@@ -1905,7 +1940,7 @@
                         <tr class="hover:bg-teal-50/30 transition-colors">
                             <td class="py-1.5 pl-9 pr-2 text-xs text-slate-600 flex items-center gap-1.5">
                                 <span class="w-1.5 h-1.5 rounded-full bg-teal-500 inline-block"></span>
-                                <span>${formatStudyYearLabel(sy.year, d.level)}</span>
+                                <span>${formatStudyYearLabel(sy.year, d.level, d.program)}</span>
                             </td>
                             <td class="py-1.5 px-2 text-center text-xs font-medium text-rose-500">${formatNum(sy.female)}</td>
                             <td class="py-1.5 px-2 text-center text-xs font-medium text-teal-600">${formatNum(sy.male)}</td>
@@ -1964,12 +1999,11 @@
         function updateSingleDegreeYear(degIndex, newYearStr) {
             const deg = shiftTempDegrees[degIndex];
             if (!deg) return;
-            const maxY = getMaxStudyYears(deg.level);
+            const maxY = getMaxStudyYears(deg.level, deg.program);
             const targetYear = Math.min(Math.max(parseInt(newYearStr, 10) || 1, 1), maxY);
 
-            // ລວມຈຳນວນເດີມຂອງສາຂາ ແລ້ວຍ້າຍໄປໄວ້ປີຮຽນທີ່ເລືອກໃໝ່
             const currentSum = getDegreeTotals(deg, 'all');
-            deg.studyYears = getStudyYearOptions(deg.level).map(y => ({
+            deg.studyYears = getStudyYearOptions(deg.level, deg.program).map(y => ({
                 year: y,
                 female: y === targetYear ? currentSum.female : 0,
                 male: y === targetYear ? currentSum.male : 0
@@ -1979,7 +2013,7 @@
 
         function promoteAllYearsInTemp() {
             shiftTempDegrees.forEach(deg => {
-                const maxY = getMaxStudyYears(deg.level);
+                const maxY = getMaxStudyYears(deg.level, deg.program);
                 const nextMap = {};
                 for (let y = 1; y <= maxY; y++) nextMap[y] = { year: y, female: 0, male: 0 };
 
@@ -1998,7 +2032,7 @@
 
         function demoteAllYearsInTemp() {
             shiftTempDegrees.forEach(deg => {
-                const maxY = getMaxStudyYears(deg.level);
+                const maxY = getMaxStudyYears(deg.level, deg.program);
                 const prevMap = {};
                 for (let y = 1; y <= maxY; y++) prevMap[y] = { year: y, female: 0, male: 0 };
 
@@ -2016,7 +2050,7 @@
         function renderShiftYearRows() {
             const container = document.getElementById('shiftYearRowsContainer');
             container.innerHTML = shiftTempDegrees.map((deg, idx) => {
-                const maxY = getMaxStudyYears(deg.level);
+                const maxY = getMaxStudyYears(deg.level, deg.program);
                 const activeYears = deg.studyYears.filter(sy => (sy.female + sy.male) > 0);
                 const currentSelectedYear = activeYears.length === 1 ? activeYears[0].year : 1;
                 const totalPeople = getDegreeTotals(deg, 'all').total;
@@ -2029,7 +2063,7 @@
                 return `
                     <div class="bg-slate-50 border border-slate-200 rounded-2xl p-3 flex items-center justify-between gap-2">
                         <div class="min-w-0 flex-1">
-                            <span class="text-[10px] font-bold text-teal-700 bg-teal-50 px-2 py-0.5 rounded-md">${deg.level}</span>
+                            <span class="text-[10px] font-bold text-teal-700 bg-teal-50 px-2 py-0.5 rounded-md">${deg.level} (${maxY} ປີ)</span>
                             <p class="text-xs font-bold text-navy-900 truncate mt-0.5">${deg.program}</p>
                             <p class="text-[11px] text-slate-500">ລວມ: <strong>${formatNum(totalPeople)}</strong> ຄົນ</p>
                         </div>
@@ -2223,7 +2257,6 @@
                 resetBtn.style.display = currentUser.role === 'admin' ? 'inline-block' : 'none';
             }
 
-            // ສະແດງກ່ອງກຳນົດຈຳນວນປີຮຽນໃນແຕ່ລະຫຼັກສູດ ສະເພາະ Admin
             const adminConfigBox = document.getElementById('adminProgramYearConfigBox');
             if (currentUser.role === 'admin') {
                 adminConfigBox.classList.remove('hidden');
@@ -2240,17 +2273,19 @@
 
         function renderAdminYearLimitInputs() {
             const container = document.getElementById('adminYearLimitInputs');
-            const levels = Object.keys(PROGRAM_YEAR_LIMITS);
-            container.innerHTML = levels.map(lvl => `
+            const keys = Object.keys(PROGRAM_YEAR_LIMITS);
+            container.innerHTML = keys.map(key => {
+                const labelText = PROGRAM_YEAR_DISPLAY_LABELS[key] || key;
+                return `
                 <div class="bg-white border border-amber-200 rounded-lg px-2 py-1.5 flex items-center justify-between gap-1.5">
-                    <span class="text-[10px] font-bold text-slate-700 truncate" title="${lvl}">${lvl}</span>
+                    <span class="text-[10px] font-bold text-slate-700 truncate" title="${labelText}">${labelText}</span>
                     <div class="flex items-center gap-1 shrink-0">
-                        <input type="number" min="1" max="15" data-limit-level="${lvl}" value="${getMaxStudyYears(lvl)}" 
+                        <input type="number" min="1" max="15" data-limit-key="${key}" value="${PROGRAM_YEAR_LIMITS[key]}" 
                             class="admin-year-limit-input w-11 px-1.5 py-0.5 bg-amber-50/60 border border-amber-300 rounded text-xs font-extrabold text-center text-navy-900 focus:outline-none focus:ring-1 focus:ring-amber-600">
                         <span class="text-[10px] text-slate-500">ປີ</span>
                     </div>
                 </div>
-            `).join('');
+            `}).join('');
         }
 
         function saveAdminYearLimits() {
@@ -2261,10 +2296,10 @@
             syncInputsToTemp();
 
             document.querySelectorAll('.admin-year-limit-input').forEach(inp => {
-                const lvl = inp.dataset.limitLevel;
+                const key = inp.dataset.limitKey;
                 const parsedVal = parseInt(inp.value, 10);
-                if (lvl && !Number.isNaN(parsedVal)) {
-                    PROGRAM_YEAR_LIMITS[lvl] = Math.min(Math.max(parsedVal, 1), 15);
+                if (key && !Number.isNaN(parsedVal)) {
+                    PROGRAM_YEAR_LIMITS[key] = Math.min(Math.max(parsedVal, 1), 15);
                 }
             });
 
@@ -2291,10 +2326,11 @@
                 const levelInp = row.querySelector('.modal-level-input');
                 const progInp = row.querySelector('.modal-prog-input');
                 const newLevel = levelInp ? (levelInp.value.trim() || 'ປະລິນຍາຕີ') : modalTempDegrees[idx].level;
+                const newProg = progInp ? (progInp.value.trim() || 'ສາຂາໃໝ່') : modalTempDegrees[idx].program;
                 modalTempDegrees[idx].level = newLevel;
-                modalTempDegrees[idx].program = progInp ? (progInp.value.trim() || 'ສາຂາໃໝ່') : modalTempDegrees[idx].program;
+                modalTempDegrees[idx].program = newProg;
 
-                const maxY = getMaxStudyYears(newLevel);
+                const maxY = getMaxStudyYears(newLevel, newProg);
                 const updatedYears = [];
                 for (let y = 1; y <= maxY; y++) {
                     const fInp = row.querySelector(`[data-year="${y}"][data-gender="female"]`);
@@ -2310,9 +2346,8 @@
             });
         }
 
-        function handleDegreeLevelChange(index, newLevel) {
+        function handleDegreeLevelOrNameChange(index) {
             syncInputsToTemp();
-            modalTempDegrees[index].level = newLevel;
             modalTempDegrees[index] = normalizeDegreeEntry(modalTempDegrees[index]);
             renderModalDegreeInputs();
         }
@@ -2354,7 +2389,7 @@
                 const normDeg = normalizeDegreeEntry(d);
                 modalTempDegrees[index] = normDeg;
                 const optionsList = levelOptions.includes(normDeg.level) ? levelOptions : [normDeg.level, ...levelOptions];
-                const maxY = getMaxStudyYears(normDeg.level);
+                const maxY = getMaxStudyYears(normDeg.level, normDeg.program);
 
                 const yearInputsHTML = normDeg.studyYears.map(sy => `
                     <div class="bg-white border border-slate-200/90 rounded-lg p-2 space-y-1">
@@ -2382,9 +2417,10 @@
                     <div class="flex items-center justify-between gap-2">
                         <div class="flex items-center gap-1.5 flex-1">
                             <span class="text-xs font-extrabold text-teal-800">${index + 1}.</span>
-                            <select onchange="handleDegreeLevelChange(${index}, this.value)" class="modal-level-input px-2 py-1 bg-teal-50 border border-teal-200 rounded-lg text-[11px] font-bold text-teal-800 focus:outline-none focus:ring-2 focus:ring-teal-500">
-                                ${optionsList.map(opt => `<option value="${opt}" ${opt === normDeg.level ? 'selected' : ''}>${opt} (${getMaxStudyYears(opt)} ປີ)</option>`).join('')}
+                            <select onchange="handleDegreeLevelOrNameChange(${index})" class="modal-level-input px-2 py-1 bg-teal-50 border border-teal-200 rounded-lg text-[11px] font-bold text-teal-800 focus:outline-none focus:ring-2 focus:ring-teal-500">
+                                ${optionsList.map(opt => `<option value="${opt}" ${opt === normDeg.level ? 'selected' : ''}>${opt}</option>`).join('')}
                             </select>
+                            <span class="text-[10px] font-bold text-sky-700 bg-sky-50 border border-sky-200 px-2 py-0.5 rounded-md">${maxY} ປີ</span>
                         </div>
                         <button type="button" onclick="removeProgramRow(${index})" title="ລຶບສາຂານີ້" class="text-rose-500 hover:text-rose-700 hover:bg-rose-50 p-1 rounded-lg transition-colors cursor-pointer">
                             <i class="ph-bold ph-trash text-sm"></i>
@@ -2392,7 +2428,7 @@
                     </div>
 
                     <div>
-                        <input type="text" value="${normDeg.program.replace(/"/g, '&quot;')}" placeholder="ຊື່ສາຂາວິຊາ (ເຊັ່ນ: ສາຂາ ແພດສາດ)" 
+                        <input type="text" onchange="handleDegreeLevelOrNameChange(${index})" value="${normDeg.program.replace(/"/g, '&quot;')}" placeholder="ຊື່ສາຂາວິຊາ (ເຊັ່ນ: ສາຂາ ທັນຕະແພດສາດ)" 
                             class="modal-prog-input w-full px-2.5 py-1.5 bg-white border border-slate-200 rounded-lg text-xs font-bold text-navy-900 focus:outline-none focus:ring-2 focus:ring-teal-500">
                     </div>
 
@@ -2703,10 +2739,10 @@
                             stateByCategory.undergrad.newsData = cloudData.undergrad.newsData || stateByCategory.undergrad.newsData;
                         }
                         if (cloudData.programYearLimits) {
-                            Object.keys(cloudData.programYearLimits).forEach(lvl => {
-                                const val = parseInt(cloudData.programYearLimits[lvl], 10);
+                            Object.keys(cloudData.programYearLimits).forEach(key => {
+                                const val = parseInt(cloudData.programYearLimits[key], 10);
                                 if (!Number.isNaN(val) && val >= 1 && val <= 15) {
-                                    PROGRAM_YEAR_LIMITS[lvl] = val;
+                                    PROGRAM_YEAR_LIMITS[key] = val;
                                 }
                             });
                             saveToStorage(STORAGE_KEYS.PROGRAM_YEAR_LIMITS, PROGRAM_YEAR_LIMITS);
