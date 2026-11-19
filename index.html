@@ -1,0 +1,2262 @@
+<!DOCTYPE html>
+<html lang="lo">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ສະຖິຕິນັກສຶກສາ ມວສ - ມະຫາວິທະຍາໄລວິທະຍາສາດສຸຂະພາບແຫ່ງຊາດ</title>
+    
+    <!-- SEO & Social Share Meta Tags -->
+    <meta name="description" content="ລະບົບຖານຂໍ້ມູນ ແລະ ລາຍງານສະຖິຕິນັກສຶກສາ ມະຫາວິທະຍາໄລວິທະຍາສາດສຸຂະພາບແຫ່ງຊາດ (ມວສຊ)">
+    <meta property="og:title" content="ສະຖິຕິນັກສຶກສາ ມວສ (ມວສຊ)">
+    <meta property="og:description" content="ລະບົບຖານຂໍ້ມູນສະຖິຕິນັກສຶກສາ ລະດັບອະນຸປະລິນຍາ, ປະລິນຍາຕີ ແລະ ຫຼັງປະລິນຍາຕີ ທົ່ວມະຫາວິທະຍາໄລ">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#0f172a">
+
+    <!-- Google Fonts: Noto Sans Lao -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Lao:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <!-- Custom Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Noto Sans Lao"', 'sans-serif'],
+                    },
+                    colors: {
+                        navy: {
+                            800: '#1e293b',
+                            900: '#0f172a',
+                            950: '#020617',
+                        },
+                        teal: {
+                            50: '#f0fdfa',
+                            100: '#ccfbf1',
+                            500: '#14b8a6',
+                            600: '#0d9488',
+                            700: '#0f766e',
+                            800: '#115e59',
+                            900: '#134e4a',
+                        },
+                        emerald: {
+                            400: '#34d399',
+                            500: '#10b981',
+                            600: '#059669',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-slate-100 text-slate-800 font-sans antialiased selection:bg-teal-600 selection:text-white min-h-screen flex flex-col items-center">
+
+    <!-- Mobile App Shell Container -->
+    <div class="w-full max-w-md bg-slate-50 min-h-screen shadow-2xl border-x border-slate-200/80 flex flex-col relative overflow-x-hidden">
+
+        <!-- Sticky Top Header -->
+        <header class="sticky top-0 z-30 bg-gradient-to-r from-navy-900 via-teal-900 to-teal-800 text-white shadow-md">
+            <div class="px-4 py-3.5 flex items-center justify-between gap-2">
+                <!-- Brand Title (Click returns to Portal Selection) -->
+                <div class="flex items-center gap-2.5 cursor-pointer" onclick="navigateToPortal()">
+                    <div class="bg-emerald-500/20 border border-emerald-400/30 p-2 rounded-xl backdrop-blur-xs">
+                        <i class="ph-fill ph-graduation-cap text-2xl text-emerald-400"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-base sm:text-lg font-bold tracking-tight leading-tight">ສະຖິຕິນັກສຶກສາ ມວສ</h1>
+                        <p id="headerSubTitle" class="text-[11px] text-teal-200 font-normal">ລະບົບຖານຂໍ້ມູນນັກສຶກສາທົ່ວມະຫາວິທະຍາໄລ</p>
+                    </div>
+                </div>
+
+                <!-- Academic Year Selector -->
+                <div class="flex items-center gap-1.5 bg-white/10 backdrop-blur-md px-2.5 py-1.5 rounded-xl border border-white/15">
+                    <i class="ph ph-calendar-blank text-emerald-300 text-sm"></i>
+                    <select id="academicYearSelect" aria-label="ເລືອກສົກຮຽນ" class="bg-transparent text-white font-semibold text-xs focus:outline-none cursor-pointer [&>option]:text-slate-900">
+                        <option value="2029-2030">ສົກຮຽນ 2029-2030</option>
+                        <option value="2028-2029">ສົກຮຽນ 2028-2029</option>
+                        <option value="2027-2028">ສົກຮຽນ 2027-2028</option>
+                        <option value="2026-2027">ສົກຮຽນ 2026-2027</option>
+                        <option value="2025-2026" selected>ສົກຮຽນ 2025-2026</option>
+                        <option value="2024-2025">ສົກຮຽນ 2024-2025</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Admin Security Status Bar (View-Only vs Logged-in Mode) -->
+            <div class="bg-navy-950/60 px-4 py-1.5 flex items-center justify-between text-[11px] border-t border-white/10">
+                <div id="authStatusBadge" class="flex items-center gap-1.5 text-slate-300">
+                    <i class="ph-fill ph-lock-key text-amber-400"></i>
+                    <span>ສະຖານະ: <strong>ເບິ່ງຂໍ້ມູນເທົ່ານັ້ນ (View Only)</strong></span>
+                </div>
+                <button id="authHeaderActionBtn" onclick="handleAuthHeaderAction()" class="font-bold text-emerald-300 hover:text-emerald-200 flex items-center gap-1 cursor-pointer transition-colors">
+                    <i class="ph-bold ph-sign-in"></i>
+                    <span>ເຂົ້າສູ່ລະບົບ</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Toast Notification Banner -->
+        <div id="toastBanner" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-navy-900/95 text-white px-4 py-2.5 rounded-full shadow-xl text-xs font-medium flex items-center gap-2 border border-white/10 whitespace-nowrap">
+            <i class="ph-fill ph-check-circle text-emerald-400 text-base"></i>
+            <span id="toastMessage">ອັບເດດຂໍ້ມູນສຳເລັດແລ້ວ!</span>
+        </div>
+
+        <!-- =====================================================================
+             VIEW 0: PORTAL SELECTION VIEW (ໜ້າທຳອິດ: ເລືອກ 2 ຫຼັກສູດຫຼັກ)
+             ===================================================================== -->
+        <main id="portalView" class="flex-1 px-4 pt-5 pb-8 space-y-5 flex flex-col justify-between">
+            <div class="space-y-5">
+                <!-- University Overview Hero Card -->
+                <section aria-label="ສະຖິຕິລວມທົ່ວມະຫາວິທະຍາໄລ" class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-navy-900 via-teal-900 to-teal-700 text-white p-5 shadow-lg shadow-teal-950/20 border border-teal-700/50">
+                    <div class="absolute -right-8 -top-8 w-36 h-36 rounded-full bg-emerald-400/10 blur-xl pointer-events-none"></div>
+                    <div class="absolute -left-8 -bottom-10 w-32 h-32 rounded-full bg-teal-400/10 blur-xl pointer-events-none"></div>
+
+                    <div class="relative z-10 text-center space-y-2">
+                        <span class="inline-flex items-center gap-1.5 text-xs font-medium text-emerald-300 bg-emerald-950/50 border border-emerald-500/30 px-3 py-1 rounded-full">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                            <span id="portalYearLabel">ສົກຮຽນ 2025-2026</span>
+                        </span>
+                        <h2 class="text-base sm:text-lg font-bold text-white leading-snug pt-1">
+                            ຍິນດີຕ້ອນຮັບສູ່ລະບົບສະຖິຕິນັກສຶກສາ
+                        </h2>
+                        <p class="text-xs text-teal-100/90">
+                            ມະຫາວິທະຍາໄລວິທະຍາສາດສຸຂະພາບແຫ່ງຊາດ (ມວສຊ)
+                        </p>
+
+                        <!-- Combined University Total Pill -->
+                        <div class="mt-3 bg-navy-950/40 backdrop-blur-xs rounded-2xl p-3 border border-white/10 flex items-center justify-around">
+                            <div>
+                                <span class="block text-[11px] text-teal-200">ນັກສຶກສາລວມທັງໝົດ</span>
+                                <strong id="portalGrandTotal" class="text-2xl font-extrabold text-white">0</strong>
+                                <span class="text-xs text-emerald-300">ຄົນ</span>
+                            </div>
+                            <div class="h-8 w-px bg-white/15"></div>
+                            <div class="text-left text-xs space-y-0.5">
+                                <div class="flex items-center gap-1.5">
+                                    <span class="w-2 h-2 rounded-full bg-rose-400"></span>
+                                    <span class="text-slate-200">ຍິງ:</span>
+                                    <strong id="portalGrandFemale" class="text-white">0</strong>
+                                </div>
+                                <div class="flex items-center gap-1.5">
+                                    <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                                    <span class="text-slate-200">ຊາຍ:</span>
+                                    <strong id="portalGrandMale" class="text-white">0</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 2 Main Program Selection Cards -->
+                <section aria-label="ເລືອກປະເພດຫຼັກສູດ" class="space-y-3.5">
+                    <div class="px-1">
+                        <h3 class="text-xs font-bold uppercase tracking-wider text-slate-500 flex items-center gap-1.5">
+                            <i class="ph-fill ph-compass text-teal-600 text-sm"></i>
+                            <span>ກະລຸນາເລືອກໝວດຫຼັກສູດທີ່ຕ້ອງການເບິ່ງຂໍ້ມູນ</span>
+                        </h3>
+                    </div>
+
+                    <!-- Option 1: ຫຼັກສູດ ອະນຸປະລິນຍາ ແລະ ປະລິນຍາຕີ -->
+                    <button 
+                        onclick="selectProgramCategory('undergrad')" 
+                        class="w-full group text-left bg-white hover:bg-sky-50/40 active:scale-[0.99] rounded-3xl p-4 sm:p-5 shadow-md border-2 border-slate-200/90 hover:border-sky-500 transition-all cursor-pointer relative overflow-hidden"
+                    >
+                        <div class="flex items-start gap-4">
+                            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-sky-600 to-blue-700 text-white flex items-center justify-center shrink-0 shadow-md group-hover:scale-105 transition-transform">
+                                <i class="ph-fill ph-student text-3xl"></i>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <div class="flex items-center justify-between gap-2">
+                                    <span class="text-[11px] font-bold text-sky-700 bg-sky-50 border border-sky-200 px-2.5 py-0.5 rounded-full">
+                                        ຕົວເລືອກທີ 1
+                                    </span>
+                                    <i class="ph-bold ph-arrow-right text-slate-400 group-hover:text-sky-600 group-hover:translate-x-1 transition-all text-lg"></i>
+                                </div>
+                                <h4 class="text-base sm:text-lg font-extrabold text-navy-900 mt-1.5 leading-snug">
+                                    ຫຼັກສູດ ອະນຸປະລິນຍາ ແລະ ປະລິນຍາຕີ
+                                </h4>
+                                <p id="portalUndergradSubtitle" class="text-xs text-slate-500 mt-0.5">
+                                    ພະແນກ ການສຶກສາກ່ອນປະລິນຍາຕີ • 6 ຄະນະວິຊາ
+                                </p>
+
+                                <!-- Live Stats Preview Pill -->
+                                <div class="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-xs">
+                                    <span class="text-slate-500">ຈຳນວນນັກສຶກສາລວມ:</span>
+                                    <span class="font-extrabold text-sky-700 bg-sky-50 px-2.5 py-0.5 rounded-lg">
+                                        <span id="portalUndergradCount">0</span> ຄົນ
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </button>
+
+                    <!-- Option 2: ຫຼັກສູດ ຫຼັງປະລິນຍາຕີ -->
+                    <button 
+                        onclick="selectProgramCategory('postgrad')" 
+                        class="w-full group text-left bg-white hover:bg-teal-50/40 active:scale-[0.99] rounded-3xl p-4 sm:p-5 shadow-md border-2 border-slate-200/90 hover:border-teal-500 transition-all cursor-pointer relative overflow-hidden"
+                    >
+                        <div class="flex items-start gap-4">
+                            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-navy-900 to-teal-700 text-emerald-300 flex items-center justify-center shrink-0 shadow-md group-hover:scale-105 transition-transform">
+                                <i class="ph-fill ph-graduation-cap text-3xl"></i>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <div class="flex items-center justify-between gap-2">
+                                    <span class="text-[11px] font-bold text-teal-700 bg-teal-50 border border-teal-200 px-2.5 py-0.5 rounded-full">
+                                        ຕົວເລືອກທີ 2
+                                    </span>
+                                    <i class="ph-bold ph-arrow-right text-slate-400 group-hover:text-teal-600 group-hover:translate-x-1 transition-all text-lg"></i>
+                                </div>
+                                <h4 class="text-base sm:text-lg font-extrabold text-navy-900 mt-1.5 leading-snug">
+                                    ຫຼັກສູດ ຫຼັງປະລິນຍາຕີ
+                                </h4>
+                                <p id="portalPostgradSubtitle" class="text-xs text-slate-500 mt-0.5">
+                                    ພະແນກ ການສຶກສາຫຼັງປະລິນຍາຕີ • 6 ຄະນະວິຊາ
+                                </p>
+
+                                <!-- Live Stats Preview Pill -->
+                                <div class="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-xs">
+                                    <span class="text-slate-500">ຈຳນວນນັກສຶກສາລວມ:</span>
+                                    <span class="font-extrabold text-teal-700 bg-teal-50 px-2.5 py-0.5 rounded-lg">
+                                        <span id="portalPostgradCount">0</span> ຄົນ
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </button>
+                </section>
+            </div>
+
+            <!-- Footer -->
+            <footer class="pt-4 text-center">
+                <p class="text-[11px] text-slate-400">ມະຫາວິທະຍາໄລວິທະຍາສາດສຸຂະພາບແຫ່ງຊາດ (ມວສຊ)</p>
+            </footer>
+        </main>
+
+        <!-- =====================================================================
+             VIEW 1: MAIN HOME VIEW (ໜ້າຫຼັກຂອງໝວດຫຼັກສູດທີ່ເລືອກ)
+             ===================================================================== -->
+        <main id="homeView" class="hidden flex-1 px-4 pt-4 pb-8 space-y-4 transition-all duration-300">
+            
+            <!-- Back to Portal Button -->
+            <div class="flex items-center justify-between">
+                <button onclick="navigateToPortal()" class="inline-flex items-center gap-1.5 bg-white hover:bg-slate-100 active:scale-95 text-navy-900 font-semibold text-xs px-3 py-2 rounded-xl border border-slate-200 shadow-2xs transition-all cursor-pointer">
+                    <i class="ph-bold ph-arrow-left text-teal-700 text-sm"></i>
+                    <span>ປ່ຽນປະເພດຫຼັກສູດ (ໜ້າທຳອິດ)</span>
+                </button>
+                <span id="currentCategoryPill" class="text-[11px] font-bold text-teal-800 bg-teal-100/80 px-2.5 py-1 rounded-lg">
+                    ຫຼັງປະລິນຍາຕີ
+                </span>
+            </div>
+
+            <!-- Hero Total Counter Card -->
+            <section id="heroCardSection" aria-label="ຈຳນວນນັກສຶກສາທັງໝົດ" class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-navy-900 via-teal-900 to-teal-700 text-white p-5 shadow-lg shadow-teal-950/20 border border-teal-700/50">
+                <div class="absolute -right-8 -top-8 w-36 h-36 rounded-full bg-emerald-400/10 blur-xl pointer-events-none"></div>
+                <div class="absolute -left-8 -bottom-10 w-32 h-32 rounded-full bg-teal-400/10 blur-xl pointer-events-none"></div>
+
+                <div class="relative z-10">
+                    <div class="flex items-center justify-between">
+                        <span class="inline-flex items-center gap-1.5 text-xs font-medium text-emerald-300 bg-emerald-950/50 border border-emerald-500/30 px-2.5 py-1 rounded-full">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                            <span id="heroYearLabel">ສົກຮຽນ 2025-2026</span>
+                        </span>
+                        <button onclick="requireAuth(() => openQuickEditModal())" class="admin-protected-btn text-xs font-medium text-teal-100 hover:text-white bg-white/10 hover:bg-white/20 px-2.5 py-1 rounded-lg flex items-center gap-1 transition-colors cursor-pointer">
+                            <i class="ph-bold ph-lock-simple lock-indicator text-amber-300"></i>
+                            <span>ແກ້ໄຂ</span>
+                        </button>
+                    </div>
+
+                    <div class="mt-3 text-center">
+                        <p id="heroSubtitleDesc" class="text-xs sm:text-sm font-medium text-teal-100/90">ຈຳນວນນັກສຶກສາທັງໝົດ</p>
+                        <div class="flex items-baseline justify-center gap-2 mt-1">
+                            <h2 id="heroTotalCount" class="text-4xl sm:text-5xl font-extrabold tracking-tight text-white">0</h2>
+                            <span class="text-sm font-medium text-emerald-300">ຄົນ</span>
+                        </div>
+                    </div>
+
+                    <!-- Female / Male Breakdown Pill Bar -->
+                    <div class="mt-4 bg-navy-950/40 backdrop-blur-xs rounded-2xl p-3 border border-white/10">
+                        <div class="flex items-center justify-between text-xs mb-1.5">
+                            <div class="flex items-center gap-1.5">
+                                <span class="w-2.5 h-2.5 rounded-full bg-rose-400"></span>
+                                <span class="text-slate-200">ຍິງ:</span>
+                                <strong id="heroFemaleCount" class="text-white font-bold">0</strong>
+                                <span id="heroFemalePct" class="text-rose-300 text-[11px]">(0%)</span>
+                            </div>
+                            <div class="flex items-center gap-1.5">
+                                <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+                                <span class="text-slate-200">ຊາຍ:</span>
+                                <strong id="heroMaleCount" class="text-white font-bold">0</strong>
+                                <span id="heroMalePct" class="text-emerald-300 text-[11px]">(0%)</span>
+                            </div>
+                        </div>
+                        <div class="w-full h-2 bg-white/15 rounded-full overflow-hidden flex">
+                            <div id="heroFemaleBar" class="bg-rose-400 h-full transition-all duration-500" style="width: 50%"></div>
+                            <div id="heroMaleBar" class="bg-emerald-400 h-full transition-all duration-500" style="width: 50%"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3x3 Grid Menu Section -->
+            <section aria-label="ເມນູຫຼັກ 9 ລາຍການ">
+                <div class="flex items-center justify-between mb-2.5 px-1">
+                    <h3 class="text-xs font-bold uppercase tracking-wider text-slate-500 flex items-center gap-1.5">
+                        <i class="ph-fill ph-squares-four text-teal-600 text-sm"></i>
+                        <span>ເລືອກໝວດໝູ່ຂໍ້ມູນ (6 ຄະນະ & ຂໍ້ມູນພະແນກ)</span>
+                    </h3>
+                </div>
+
+                <div id="gridMenuContainer" class="grid grid-cols-3 gap-2.5 sm:gap-3">
+                    <!-- Populated dynamically -->
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <footer class="pt-2 text-center">
+                <p class="text-[11px] text-slate-400">ມະຫາວິທະຍາໄລວິທະຍາສາດສຸຂະພາບແຫ່ງຊາດ (ມວສຊ)</p>
+            </footer>
+        </main>
+
+        <!-- =====================================================================
+             VIEW 2: FACULTY DETAIL SUB-VIEW (ລາຍລະອຽດແຕ່ລະຄະນະ)
+             ===================================================================== -->
+        <section id="facultyDetailView" class="hidden flex-1 px-4 pt-4 pb-8 space-y-4">
+            <div class="flex items-center justify-between gap-2">
+                <button onclick="navigateToHome()" class="inline-flex items-center gap-1.5 bg-white hover:bg-slate-100 active:scale-95 text-navy-900 font-semibold text-xs sm:text-sm px-3.5 py-2.5 rounded-xl border border-slate-200 shadow-2xs transition-all cursor-pointer">
+                    <i class="ph-bold ph-arrow-left text-teal-700 text-base"></i>
+                    <span>ກັບຄືນໜ້າຫຼັກ</span>
+                </button>
+
+                <button id="editCurrentFacultyBtn" class="admin-protected-btn inline-flex items-center gap-1.5 bg-teal-700 hover:bg-teal-800 active:scale-95 text-white font-semibold text-xs sm:text-sm px-3.5 py-2.5 rounded-xl shadow-sm transition-all cursor-pointer">
+                    <i class="ph-bold ph-lock-simple lock-indicator text-amber-300 text-base"></i>
+                    <span>ແກ້ໄຂຂໍ້ມູນ</span>
+                </button>
+            </div>
+
+            <!-- Faculty Banner Card -->
+            <div id="facultyDetailHeaderCard" class="rounded-3xl bg-gradient-to-br from-navy-900 to-teal-800 text-white p-5 shadow-md">
+                <div class="flex items-center gap-3.5">
+                    <div id="detailFacultyIconBox" class="w-14 h-14 rounded-2xl bg-white/15 border border-white/20 flex items-center justify-center shrink-0">
+                        <i id="detailFacultyIcon" class="ph-fill ph-heartbeat text-3xl text-emerald-300"></i>
+                    </div>
+                    <div>
+                        <span id="detailDeptBadge" class="text-[11px] font-medium text-emerald-300 bg-emerald-950/60 px-2 py-0.5 rounded-md">ພະແນກ ການສຶກສາຫຼັງປະລິນຍາຕີ</span>
+                        <h2 id="detailFacultyName" class="text-lg sm:text-xl font-bold mt-1 leading-snug">ຄະນະແພດສາດ</h2>
+                        <p id="detailFacultyEnName" class="text-xs text-teal-200">Faculty of Medicine</p>
+                    </div>
+                </div>
+
+                <!-- Summary Numbers Grid -->
+                <div class="grid grid-cols-3 gap-2 mt-5 pt-4 border-t border-white/15 text-center">
+                    <div class="bg-white/10 rounded-2xl p-2.5">
+                        <span class="block text-[11px] text-teal-100">ລວມທັງໝົດ</span>
+                        <strong id="detailTotalNum" class="text-xl sm:text-2xl font-extrabold text-white">0</strong>
+                    </div>
+                    <div class="bg-white/10 rounded-2xl p-2.5">
+                        <span class="block text-[11px] text-rose-200">ນັກສຶກສາຍິງ</span>
+                        <strong id="detailFemaleNum" class="text-xl sm:text-2xl font-extrabold text-rose-300">0</strong>
+                    </div>
+                    <div class="bg-white/10 rounded-2xl p-2.5">
+                        <span class="block text-[11px] text-emerald-200">ນັກສຶກສາຊາຍ</span>
+                        <strong id="detailMaleNum" class="text-xl sm:text-2xl font-extrabold text-emerald-300">0</strong>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Clean Tabular Breakdown for Faculty Programs -->
+            <div class="bg-white rounded-3xl shadow-xs border border-slate-200/80 overflow-hidden">
+                <div class="px-4 py-3.5 bg-slate-50/80 border-b border-slate-200/80 flex items-center justify-between">
+                    <h3 class="text-xs sm:text-sm font-bold text-navy-900 flex items-center gap-2">
+                        <i class="ph-fill ph-table text-teal-600 text-lg"></i>
+                        <span id="detailTableHeaderTitle">ສະຖິຕິແຍກຕາມຫຼັກສູດ ແລະ ລະດັບການສຶກສາ</span>
+                    </h3>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-slate-100/80 text-[11px] font-bold text-slate-600 border-b border-slate-200">
+                                <th class="py-2.5 pl-4 pr-2">ຫຼັກສູດ / ສາຂາວິຊາ</th>
+                                <th class="py-2.5 px-2 text-center text-rose-600">ຍິງ</th>
+                                <th class="py-2.5 px-2 text-center text-teal-700">ຊາຍ</th>
+                                <th class="py-2.5 pl-2 pr-4 text-right text-navy-900">ລວມ</th>
+                            </tr>
+                        </thead>
+                        <tbody id="degreeTableBody" class="divide-y divide-slate-100 text-xs sm:text-sm">
+                            <!-- Populated via JS -->
+                        </tbody>
+                        <tfoot id="degreeTableFoot" class="bg-teal-50/90 border-t-2 border-teal-600/30 font-bold text-xs sm:text-sm text-navy-900">
+                            <!-- Populated via JS -->
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- =====================================================================
+             VIEW 3: NEWS & ANNOUNCEMENTS SUB-VIEW (ຂໍ້ມູນຂ່າວສານ)
+             ===================================================================== -->
+        <section id="newsView" class="hidden flex-1 px-4 pt-4 pb-8 space-y-4">
+            <div class="flex items-center justify-between gap-2">
+                <button onclick="navigateToHome()" class="inline-flex items-center gap-1.5 bg-white hover:bg-slate-100 active:scale-95 text-navy-900 font-semibold text-xs sm:text-sm px-3.5 py-2.5 rounded-xl border border-slate-200 shadow-2xs transition-all cursor-pointer">
+                    <i class="ph-bold ph-arrow-left text-teal-700 text-base"></i>
+                    <span>ກັບຄືນໜ້າຫຼັກ</span>
+                </button>
+
+                <button onclick="requireAuth(() => openAddNewsModal(), 'admin')" class="admin-protected-btn inline-flex items-center gap-1.5 bg-teal-700 hover:bg-teal-800 active:scale-95 text-white font-semibold text-xs sm:text-sm px-3.5 py-2.5 rounded-xl shadow-sm transition-all cursor-pointer">
+                    <i class="ph-bold ph-lock-simple lock-indicator text-amber-300 text-base"></i>
+                    <span>ເພີ່ມຂ່າວສານ</span>
+                </button>
+            </div>
+
+            <div class="bg-gradient-to-r from-navy-900 to-teal-800 text-white rounded-3xl p-5 shadow-md">
+                <div class="flex items-center gap-3">
+                    <div class="bg-white/15 p-3 rounded-2xl">
+                        <i class="ph-fill ph-newspaper text-2xl text-emerald-300"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-lg font-bold">ຂໍ້ມູນຂ່າວສານ & ແຈ້ງການ</h2>
+                        <p id="newsDeptSubtitle" class="text-xs text-teal-100">ພະແນກ ການສຶກສາຫຼັງປະລິນຍາຕີ ມວສ</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="newsFeedContainer" class="space-y-3">
+                <!-- Populated dynamically via JS -->
+            </div>
+        </section>
+
+        <!-- =====================================================================
+             VIEW 4: ORGANIZATIONAL CHART SUB-VIEW (ໂຄງຮ່າງການຈັດຕັ້ງ)
+             ===================================================================== -->
+        <section id="orgChartView" class="hidden flex-1 px-4 pt-4 pb-8 space-y-4">
+            <div class="flex items-center justify-between gap-2">
+                <button onclick="navigateToHome()" class="inline-flex items-center gap-1.5 bg-white hover:bg-slate-100 active:scale-95 text-navy-900 font-semibold text-xs sm:text-sm px-3.5 py-2.5 rounded-xl border border-slate-200 shadow-2xs transition-all cursor-pointer">
+                    <i class="ph-bold ph-arrow-left text-teal-700 text-base"></i>
+                    <span>ກັບຄືນໜ້າຫຼັກ</span>
+                </button>
+
+                <button onclick="requireAuth(() => openOrgEditModal(), 'admin')" class="admin-protected-btn inline-flex items-center gap-1.5 bg-teal-700 hover:bg-teal-800 active:scale-95 text-white font-semibold text-xs sm:text-sm px-3.5 py-2.5 rounded-xl shadow-sm transition-all cursor-pointer">
+                    <i class="ph-bold ph-lock-simple lock-indicator text-amber-300 text-base"></i>
+                    <span>ແກ້ໄຂລາຍຊື່</span>
+                </button>
+            </div>
+
+            <div class="bg-gradient-to-r from-navy-900 to-teal-800 text-white rounded-3xl p-5 shadow-md">
+                <div class="flex items-center gap-3">
+                    <div class="bg-white/15 p-3 rounded-2xl">
+                        <i class="ph-fill ph-tree-structure text-2xl text-emerald-300"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-lg font-bold">ໂຄງຮ່າງການຈັດຕັ້ງ</h2>
+                        <p id="orgDeptSubtitle" class="text-xs text-teal-100">ພະແນກ ການສຶກສາຫຼັງປະລິນຍາຕີ ມວສ</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="orgChartContainer" class="bg-white rounded-3xl p-4 sm:p-5 shadow-xs border border-slate-200/80 flex flex-col items-center">
+                <!-- Populated dynamically via JS -->
+            </div>
+        </section>
+
+        <!-- =====================================================================
+             VIEW 5: APP VERSION & SYSTEM INFO SUB-VIEW (Version ຂອງ WebApp)
+             ===================================================================== -->
+        <section id="versionView" class="hidden flex-1 px-4 pt-4 pb-8 space-y-4">
+            <div>
+                <button onclick="navigateToHome()" class="inline-flex items-center gap-1.5 bg-white hover:bg-slate-100 active:scale-95 text-navy-900 font-semibold text-xs sm:text-sm px-3.5 py-2.5 rounded-xl border border-slate-200 shadow-2xs transition-all cursor-pointer">
+                    <i class="ph-bold ph-arrow-left text-teal-700 text-base"></i>
+                    <span>ກັບຄືນໜ້າຫຼັກ</span>
+                </button>
+            </div>
+
+            <div class="bg-white rounded-3xl p-6 shadow-xs border border-slate-200/80 text-center space-y-4">
+                <div class="w-16 h-16 mx-auto rounded-2xl bg-gradient-to-br from-navy-900 to-teal-700 text-emerald-300 flex items-center justify-center shadow-lg">
+                    <i class="ph-fill ph-info text-3xl"></i>
+                </div>
+
+                <div>
+                    <span class="inline-block text-xs font-bold text-teal-700 bg-teal-50 border border-teal-200 px-3 py-1 rounded-full">Version 2.2.0 (Faculty-Role Edition)</span>
+                    <h2 class="text-lg font-bold text-navy-900 mt-2">ລະບົບລາຍງານສະຖິຕິນັກສຶກສາ ມວສຊ</h2>
+                    <p class="text-xs text-slate-500 mt-1">ມະຫາວິທະຍາໄລວິທະຍາສາດສຸຂະພາບແຫ່ງຊາດ (ມວສຊ)</p>
+                </div>
+
+                <div class="bg-slate-50 rounded-2xl p-4 text-left space-y-2.5 border border-slate-100 text-xs">
+                    <div class="flex justify-between py-1 border-b border-slate-200/70">
+                        <span class="text-slate-500">ເວີຊັນລະບົບ (App Version):</span>
+                        <span class="font-bold text-navy-900">v2.2.0-stable</span>
+                    </div>
+                    <div class="flex justify-between py-1 border-b border-slate-200/70">
+                        <span class="text-slate-500">ອັບເດດຂໍ້ມູນລ່າສຸດ:</span>
+                        <span id="lastUpdatedTimestamp" class="font-semibold text-teal-700">19 ພະຈິກ 2026</span>
+                    </div>
+                    <div class="flex justify-between py-1 border-b border-slate-200/70">
+                        <span class="text-slate-500">ຂອບເຂດຂໍ້ມູນ:</span>
+                        <span class="font-semibold text-navy-900">ອະນຸປະລິນຍາ-ປະລິນຍາຕີ & ຫຼັງປະລິນຍາຕີ</span>
+                    </div>
+                    <div class="flex justify-between py-1">
+                        <span class="text-slate-500">ພັດທະນາໂດຍ:</span>
+                        <span class="font-semibold text-navy-900">ມວສຊ</span>
+                    </div>
+                </div>
+
+                <div class="text-left space-y-1.5">
+                    <h4 class="text-xs font-bold text-navy-900">ບັນທຶກການພັດທະນາ (Release Notes):</h4>
+                    <ul class="text-xs text-slate-600 space-y-1 list-disc list-inside">
+                        <li>ເພີ່ມລະບົບ Login ແຍກສິດ 7 ບັນຊີ (1 Admin ສູງສຸດ + 6 ຄະນະວິຊາ)</li>
+                        <li>ຮອງຮັບການເພີ່ມສາຂາວິຊາໃໝ່, ແກ້ໄຂຊື່ສາຂາ ແລະ ລຶບສາຂາໄດ້ໃນແຕ່ລະຄະນະ</li>
+                        <li>ບັນທຶກຂໍ້ມູນອັດຕະໂນມັດແຍກຕາມປະເພດຫຼັກສູດ ແລະ ສົກຮຽນ</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- =====================================================================
+         MODAL 1: LIVE DATA EDIT MODAL (ແກ້ໄຂໂຕເລກ + ເພີ່ມ/ແກ້ໄຂ/ລຶບ ສາຂາ)
+         ===================================================================== -->
+    <div id="editModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-navy-950/65 backdrop-blur-xs">
+        <div class="bg-white rounded-3xl w-full max-w-md shadow-2xl border border-slate-100 overflow-hidden">
+            <div class="bg-gradient-to-r from-navy-900 to-teal-800 px-5 py-4 text-white flex items-center justify-between">
+                <div class="flex items-center gap-2.5">
+                    <div class="bg-white/15 p-2 rounded-xl">
+                        <i class="ph-bold ph-pencil-simple text-lg text-emerald-300"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-sm sm:text-base">ແກ້ໄຂສະຖິຕິ & ສາຂາວິຊາ</h3>
+                        <p id="editModalCategoryLabel" class="text-[11px] text-teal-200">ຫຼັກສູດ ຫຼັງປະລິນຍາຕີ</p>
+                    </div>
+                </div>
+                <button onclick="closeEditModal()" class="p-1.5 rounded-full hover:bg-white/20 transition-colors cursor-pointer">
+                    <i class="ph-bold ph-x text-lg"></i>
+                </button>
+            </div>
+
+            <form id="editFacultyForm" class="p-5 space-y-4">
+                <div>
+                    <label for="modalFacultySelect" class="block text-xs font-bold text-slate-700 mb-1.5">ຄະນະວິຊາ</label>
+                    <select id="modalFacultySelect" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-navy-900 focus:outline-none focus:ring-2 focus:ring-teal-600">
+                        <!-- Options populated dynamically -->
+                    </select>
+                </div>
+
+                <div class="space-y-2">
+                    <div class="flex items-center justify-between">
+                        <p class="text-xs font-bold text-slate-700">ລາຍການສາຂາ & ຈຳນວນນັກສຶກສາ:</p>
+                        <span class="text-[10px] text-slate-400">ແກ້ໄຂຊື່/ລະດັບ ຫຼື ເພີ່ມສາຂາໄດ້</span>
+                    </div>
+                    <div id="modalDegreeInputsContainer" class="space-y-2.5 max-h-64 overflow-y-auto pr-1">
+                        <!-- Dynamically generated rows + Add New Program Button -->
+                    </div>
+                </div>
+
+                <div class="bg-teal-50 border border-teal-200 rounded-2xl p-3 flex items-center justify-between">
+                    <span class="text-xs font-semibold text-teal-900">ລວມນັກສຶກສາໃນຄະນະນີ້:</span>
+                    <span id="modalFacultyTotalPreview" class="text-base font-extrabold text-teal-700">0 ຄົນ</span>
+                </div>
+
+                <div class="flex items-center gap-2 pt-1">
+                    <button type="button" id="resetDataBtn" onclick="resetAllData()" class="px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-600 bg-slate-100 hover:bg-slate-200 transition-colors cursor-pointer">
+                        ຄືນຄ່າເດີມ
+                    </button>
+                    <button type="submit" class="flex-1 bg-gradient-to-r from-teal-700 to-emerald-600 hover:from-teal-800 hover:to-emerald-700 text-white font-bold py-2.5 px-4 rounded-xl text-sm shadow-md transition-all cursor-pointer">
+                        ບັນທຶກຂໍ້ມູນ
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- =====================================================================
+         MODAL 2: ORG CHART EDIT MODAL
+         ===================================================================== -->
+    <div id="orgEditModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-navy-950/65 backdrop-blur-xs">
+        <div class="bg-white rounded-3xl w-full max-w-md shadow-2xl border border-slate-100 overflow-hidden">
+            <div class="bg-gradient-to-r from-navy-900 to-teal-800 px-5 py-4 text-white flex items-center justify-between">
+                <div class="flex items-center gap-2.5">
+                    <div class="bg-white/15 p-2 rounded-xl">
+                        <i class="ph-bold ph-users-three text-lg text-emerald-300"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-sm sm:text-base">ແກ້ໄຂລາຍຊື່ບຸກຄະລາກອນ</h3>
+                        <p id="orgModalSubtitle" class="text-[11px] text-teal-200">ພະແນກ ການສຶກສາຫຼັງປະລິນຍາຕີ</p>
+                    </div>
+                </div>
+                <button onclick="closeOrgEditModal()" class="p-1.5 rounded-full hover:bg-white/20 transition-colors cursor-pointer">
+                    <i class="ph-bold ph-x text-lg"></i>
+                </button>
+            </div>
+
+            <form id="orgEditForm" class="p-5 space-y-3">
+                <div id="orgInputsContainer" class="space-y-3 max-h-80 overflow-y-auto pr-1">
+                    <!-- Populated dynamically -->
+                </div>
+
+                <div class="flex items-center gap-2 pt-2">
+                    <button type="button" onclick="closeOrgEditModal()" class="px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-600 bg-slate-100 hover:bg-slate-200 transition-colors cursor-pointer">
+                        ຍົກເລີກ
+                    </button>
+                    <button type="submit" class="flex-1 bg-gradient-to-r from-teal-700 to-emerald-600 hover:from-teal-800 hover:to-emerald-700 text-white font-bold py-2.5 px-4 rounded-xl text-sm shadow-md transition-all cursor-pointer">
+                        ບັນທຶກລາຍຊື່
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- =====================================================================
+         MODAL 3: ADD NEWS MODAL
+         ===================================================================== -->
+    <div id="addNewsModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-navy-950/65 backdrop-blur-xs">
+        <div class="bg-white rounded-3xl w-full max-w-md shadow-2xl border border-slate-100 overflow-hidden">
+            <div class="bg-gradient-to-r from-navy-900 to-teal-800 px-5 py-4 text-white flex items-center justify-between">
+                <div class="flex items-center gap-2.5">
+                    <div class="bg-white/15 p-2 rounded-xl">
+                        <i class="ph-bold ph-newspaper text-lg text-emerald-300"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-sm sm:text-base">ເພີ່ມຂ່າວສານ / ແຈ້ງການໃໝ່</h3>
+                        <p id="newsModalSubtitle" class="text-[11px] text-teal-200">ພະແນກ ການສຶກສາຫຼັງປະລິນຍາຕີ</p>
+                    </div>
+                </div>
+                <button onclick="closeAddNewsModal()" class="p-1.5 rounded-full hover:bg-white/20 transition-colors cursor-pointer">
+                    <i class="ph-bold ph-x text-lg"></i>
+                </button>
+            </div>
+
+            <form id="addNewsForm" class="p-5 space-y-3.5">
+                <div>
+                    <label for="newsCategoryInput" class="block text-xs font-bold text-slate-700 mb-1">ໝວດໝູ່ແຈ້ງການ</label>
+                    <select id="newsCategoryInput" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-navy-900 focus:outline-none focus:ring-2 focus:ring-teal-600">
+                        <option value="ແຈ້ງການຮັບສະໝັກ">ແຈ້ງການຮັບສະໝັກ</option>
+                        <option value="ກອງປະຊຸມວິຊາການ">ກອງປະຊຸມວິຊາການ</option>
+                        <option value="ທຶນການສຶກສາ">ທຶນການສຶກສາ</option>
+                        <option value="ແຈ້ງການທົ່ວໄປ">ແຈ້ງການທົ່ວໄປ</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="newsTitleInput" class="block text-xs font-bold text-slate-700 mb-1">ຫົວຂໍ້ຂ່າວ / ແຈ້ງການ</label>
+                    <input type="text" id="newsTitleInput" required placeholder="ປ້ອນຫົວຂໍ້ຂ່າວສານ..." class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-navy-900 focus:outline-none focus:ring-2 focus:ring-teal-600">
+                </div>
+
+                <div>
+                    <label for="newsContentInput" class="block text-xs font-bold text-slate-700 mb-1">ເນື້ອໃນລາຍລະອຽດ</label>
+                    <textarea id="newsContentInput" rows="3" required placeholder="ປ້ອນລາຍລະອຽດແຈ້ງການ..." class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-navy-900 focus:outline-none focus:ring-2 focus:ring-teal-600"></textarea>
+                </div>
+
+                <div class="flex items-center gap-2 pt-1">
+                    <button type="button" onclick="closeAddNewsModal()" class="px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-600 bg-slate-100 hover:bg-slate-200 transition-colors cursor-pointer">
+                        ຍົກເລີກ
+                    </button>
+                    <button type="submit" class="flex-1 bg-gradient-to-r from-teal-700 to-emerald-600 hover:from-teal-800 hover:to-emerald-700 text-white font-bold py-2.5 px-4 rounded-xl text-sm shadow-md transition-all cursor-pointer">
+                        ໂພສແຈ້ງການ
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- =====================================================================
+         MODAL 4: ADMIN & FACULTY LOGIN MODAL
+         ===================================================================== -->
+    <div id="loginModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-navy-950/75 backdrop-blur-xs">
+        <div class="bg-white rounded-3xl w-full max-w-sm shadow-2xl border border-slate-100 overflow-hidden">
+            <div class="bg-gradient-to-r from-navy-900 to-teal-800 px-5 py-4 text-white flex items-center justify-between">
+                <div class="flex items-center gap-2.5">
+                    <div class="bg-emerald-500/20 border border-emerald-400/30 p-2 rounded-xl">
+                        <i class="ph-fill ph-shield-check text-xl text-emerald-300"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-sm sm:text-base">ເຂົ້າສູ່ລະບົບຜູ້ດູແລ</h3>
+                        <p class="text-[11px] text-teal-200">ຢືນຢັນສິດເພື່ອແກ້ໄຂຂໍ້ມູນ</p>
+                    </div>
+                </div>
+                <button onclick="closeLoginModal()" class="p-1.5 rounded-full hover:bg-white/20 transition-colors cursor-pointer">
+                    <i class="ph-bold ph-x text-lg"></i>
+                </button>
+            </div>
+
+            <form id="loginForm" class="p-5 space-y-3.5">
+                <div id="loginErrorMsg" class="hidden bg-rose-50 border border-rose-200 text-rose-700 text-xs font-medium px-3 py-2 rounded-xl flex items-center gap-2">
+                    <i class="ph-fill ph-warning-circle text-base shrink-0"></i>
+                    <span>ຊື່ຜູ້ໃຊ້ ຫຼື ລະຫັດຜ່ານບໍ່ຖືກຕ້ອງ!</span>
+                </div>
+
+                <div>
+                    <label for="loginUsername" class="block text-xs font-bold text-slate-700 mb-1">ຊື່ຜູ້ໃຊ້ (Username)</label>
+                    <div class="relative">
+                        <i class="ph ph-user absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-base"></i>
+                        <input type="text" id="loginUsername" required autocomplete="off" placeholder="ປ້ອນຊື່ຜູ້ໃຊ້ (Username)..." class="w-full pl-9 pr-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-navy-900 focus:outline-none focus:ring-2 focus:ring-teal-600">
+                    </div>
+                </div>
+
+                <div>
+                    <label for="loginPassword" class="block text-xs font-bold text-slate-700 mb-1">ລະຫັດຜ່ານ (Password)</label>
+                    <div class="relative">
+                        <i class="ph ph-lock-key absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-base"></i>
+                        <input type="password" id="loginPassword" required autocomplete="current-password" placeholder="ປ້ອນລະຫັດຜ່ານ..." class="w-full pl-9 pr-10 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-navy-900 focus:outline-none focus:ring-2 focus:ring-teal-600">
+                        <button type="button" onclick="togglePasswordVisibility()" aria-label="ສະແດງ ຫຼື ປິດບັງລະຫັດຜ່ານ" class="absolute right-2.5 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-teal-700 transition-colors cursor-pointer">
+                            <i id="togglePasswordIcon" class="ph ph-eye text-base"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-2 pt-1.5">
+                    <button type="button" onclick="closeLoginModal()" class="px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-600 bg-slate-100 hover:bg-slate-200 transition-colors cursor-pointer">
+                        ຍົກເລີກ
+                    </button>
+                    <button type="submit" class="flex-1 bg-gradient-to-r from-navy-900 to-teal-700 hover:from-navy-800 hover:to-teal-800 text-white font-bold py-2.5 px-4 rounded-xl text-sm shadow-md transition-all cursor-pointer flex items-center justify-center gap-1.5">
+                        <i class="ph-bold ph-sign-in"></i>
+                        <span>ເຂົ້າສູ່ລະບົບ</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- =====================================================================
+         JAVASCRIPT APPLICATION LOGIC
+         ===================================================================== -->
+    <script>
+        const STORAGE_KEYS = {
+            POSTGRAD_STATS: 'uhs_postgrad_stats_v4_programs',
+            POSTGRAD_ORG: 'uhs_postgrad_org_v2',
+            POSTGRAD_NEWS: 'uhs_postgrad_news_v2',
+            UNDERGRAD_STATS: 'uhs_undergrad_stats_v2',
+            UNDERGRAD_ORG: 'uhs_undergrad_org_v1',
+            UNDERGRAD_NEWS: 'uhs_undergrad_news_v1',
+            LAST_UPDATED: 'uhs_last_updated_v1'
+        };
+
+        // ຟັງຊັນຈັດການວັນທີພາສາລາວ
+        function getCurrentLaoDate() {
+            const months = [
+                'ມັງກອນ', 'ກຸມພາ', 'ມີນາ', 'ເມສາ', 'ພຶດສະພາ', 'ມິຖຸນາ',
+                'ກໍລະກົດ', 'ສິງຫາ', 'ກັນຍາ', 'ຕຸລາ', 'ພະຈິກ', 'ທັນວາ'
+            ];
+            const now = new Date();
+            const day = String(now.getDate()).padStart(2, '0');
+            const month = months[now.getMonth()];
+            const year = now.getFullYear();
+            return `${day} ${month} ${year}`;
+        }
+
+        function updateLastModifiedDate() {
+            const todayStr = getCurrentLaoDate();
+            saveToStorage(STORAGE_KEYS.LAST_UPDATED, todayStr);
+            const tsEl = document.getElementById('lastUpdatedTimestamp');
+            if (tsEl) tsEl.textContent = todayStr;
+        }
+
+        /**
+         * 1. DATASET FOR POSTGRADUATE (ຫຼັກສູດ ຫຼັງປະລິນຍາຕີ)
+         */
+        const initialPostgradDatabase = {
+            "2025-2026": {
+                faculties: [
+                    {
+                        id: "med",
+                        shortName: "ຄະນະແພດສາດ",
+                        fullName: "ຄະນະແພດສາດ",
+                        enName: "Faculty of Medicine",
+                        icon: "ph-heartbeat",
+                        accent: "teal",
+                        degrees: [
+                            { level: "ແພດລົງເລີກຂະແໜງ", program: "ສາຂາ ຈັກຂຸວິທະຍາ", female: 6, male: 12 },
+                            { level: "ແພດລົງເລີກຂະແໜງ", program: "ສາຂາ ນາລີເວດ-ສູຕິສາດ", female: 0, male: 0 },
+                            { level: "ແພດລົງເລີກຂະແໜງ", program: "ສາຂາ ລະບົບຫາຍໃຈ", female: 0, male: 0 },
+                            { level: "ແພດລົງເລີກຂະແໜງ", program: "ສາຂາ ກຸມມານເວດສາດ", female: 0, male: 0 },
+                            { level: "ແພດລົງເລີກຂະແໜງ", program: "ສາຂາ ການແພດສູກເສີນ", female: 0, male: 0 },
+                            { level: "ແພດລົງເລີກຂະແໜງ", program: "ສາຂາ ວາງຢາສະຫຼົບ-ຟື້ນຟູຊີບ", female: 0, male: 0 },
+                            { level: "ແພດລົງເລີກຂະແໜງ", program: "ສາຂາ ການພະຍາບານ ຟື້ນຟູຊີບຜູ້ໃຫຍ່", female: 0, male: 0 },
+                            { level: "ແພດລົງເລີກຂະແໜງ", program: "ສາຂາ ການພະຍາບານ ຟື້ນຟູຊີບເດັກເກີດໃໝ່ ແລະ ເດັກ", female: 0, male: 0 },
+                            { level: "ແພດລົງເລີກຂະແໜງ", program: "ສາຂາ ການພະຍາບານຕາ", female: 0, male: 0 },
+                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 1", program: "ສາຂາ ກຸມມານເວດສາດ", female: 0, male: 0 },
+                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 1", program: "ສາຂາ ການແພດສຸກເສີນ", female: 28, male: 22 },
+                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 1", program: "ສາຂາ ການແພດຄອບຄົວ", female: 24, male: 12 },
+                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 1", program: "ສາຂາ ການແພດຟື້ນຟູໜ້າທີ່ການ", female: 0, male: 0 },
+                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 1", program: "ສາຂາ ນາລີເວດ-ສູຕິສາດ", female: 22, male: 10 },
+                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 1", program: "ສາຂາ ອາຍຸຣະສາດ", female: 10, male: 24 },
+                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 1", program: "ສາຂາ ວາງຢາສະຫຼົບ-ຟື້ນຟູຊີບ", female: 6, male: 18 },
+                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 1", program: "ສາຂາ ລັງສີ ແລະ ຮູບພາບການແພດ", female: 4, male: 12 },
+                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 1", program: "ສາຂາ ຫູ ດັງ ຄໍ ວິທະຍາ", female: 14, male: 11 },
+                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 1", program: "ສາຂາ ຈັກຂຸວິທະຍາ", female: 12, male: 14 },
+                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 1", program: "ສາຂາ ປະສາດວິທະຍາ", female: 11, male: 8 },
+                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 1", program: "ສາຂາ ຊີວະວິທະຍາ ການແພດ", female: 10, male: 9 },
+                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 1", program: "ສາຂາ ເລືອດວິທະຍາ", female: 12, male: 5 },
+                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 1", program: "ສາຂາ ຜ່າຕັດທົ່ວໄປ (ສັນລະຍະສາດ)", female: 9, male: 7 },
+                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 1", program: "ສາຂາ ຜ່າຕັດກະດູກ", female: 10, male: 8 },
+                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 1", program: "ສາຂາ ສຸຂະພາບຈິດ", female: 8, male: 6 },
+                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 1", program: "ສາຂາ ພະຍາດຜິວໜັງ", female: 16, male: 12 },
+                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 2", program: "ສາຂາ ຫົວໃຈ-ເສັ້ນເລືອດ", female: 0, male: 0 },
+                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 2", program: "ສາຂາ ລະບົບຖ່າຍເທທາງນາລີເວດ", female: 0, male: 0 },
+                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 2", program: "ສາຂາ ກະເພາະລໍາໄສ້ ແລະ ຕັບ", female: 0, male: 0 },
+                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 2", program: "ສາຂາ ຕ່ອມຂັບຍ່ອຍໃນ ແລະ ລະບົບເຜົາປ່ຽນທາດ", female: 0, male: 0 },
+                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 2", program: "ສາຂາ ການແພດສຸກເສີນໃນເດັກ", female: 0, male: 0 },
+                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 2", program: "ສາຂາ ຜ່າຕັດເດັກ", female: 0, male: 0 },
+                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 2", program: "ສາຂາ ເດັກເກີດໃໝ່", female: 0, male: 0 },
+                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 2", program: "ສາຂາ ເລືອດວິທະຍາ ແລະ ມະເຮັງໃນເດັກ", female: 0, male: 0 },
+                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 2", program: "ສາຂາ ການແພດຈະເລີນພັນ", female: 0, male: 0 },
+                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 2", program: "ສາຂາ ການແພດແມ່ ແລະ ເດັກໃນທ້ອງ", female: 0, male: 0 },
+                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 2", program: "ສາຂາ ພະຍາດຊືມເຊື້ອໃນເດັກ", female: 0, male: 0 },
+                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 2", program: "ສາຂາ ພະຍາດຂໍ່ວິທະຍາ", female: 0, male: 0 },
+                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 2", program: "ສາຂາ ພະຍາດຊືມເຊື້ອ-ເຂດຮ້ອນ", female: 0, male: 0 },
+                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 2", program: "ສາຂາ ພະຍາດເລືອດ", female: 0, male: 0 },
+                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 2", program: "ສາຂາ ພະຍາດລະບົບຫາຍໃຈ", female: 0, male: 0 },
+                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 2", program: "ສາຂາ ພະຍາດເລືອດ ແລະ ມະເຮັງ", female: 0, male: 0 },
+                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 2", program: "ສາຂາ ພະຍາດໄຂ່ຫຼັງ", female: 0, male: 0 },
+                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 2", program: "ສາຂາ ພະຍາດຜິວໜັງໃນເດັກ", female: 0, male: 0 },
+                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 2", program: "ສາຂາ ພະຍາດໄຂ່ຫຼັງໃນເດັກ", female: 0, male: 0 },
+                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 2", program: "ສາຂາ ປະສາດວິທະຍາ", female: 0, male: 0 },
+                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 2", program: "ສາຂາ ມະເຮັງວິທະຍາ", female: 0, male: 0 },
+                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 2", program: "ສາຂາ ມະເຮັງທາງນາລີເວດ", female: 0, male: 0 },
+                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 2", program: "ສາຂາ ລະບົບລະລາຍ ແລະ ໂພຊະນາການໃນເດັກ", female: 0, male: 0 },
+                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 2", program: "ສາຂາ ລະບົບຫາຍໃຈ ແລະ ຟື້ນຟູຊີບໃນເດັກ", female: 0, male: 0 },
+                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 2", program: "ສາຂາ ພັດທະນາການໃນເດັກ ແລະການຈະເລີນເຕີຍໂຕໃນເດັກ", female: 0, male: 0 },
+                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 2", program: "ສາຂາ ຜ່າຕັດສະໝອງ ແລະ ກະດູກສັນຫຼັງ", female: 0, male: 0 },
+                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 2", program: "ສາຂາ ຜ່າຕັດ ຕັບ, ທາງເດີນນໍ້າບີ ແລະ ມ້າມ", female: 0, male: 0 },
+                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 2", program: "ສາຂາ ຜ່າຕັດລະບົບຖ່າຍເທ", female: 0, male: 0 },
+                            { level: "ປະລິນຍາໂທ", program: "ສາຂາ ການແພດຄອບຄົວ (ທາງໄກ)", female: 18, male: 14 }
+                        ]
+                    },
+                    {
+                        id: "dent",
+                        shortName: "ຄະນະທັນຕະແພດສາດ",
+                        fullName: "ຄະນະທັນຕະແພດສາດ",
+                        enName: "Faculty of Dentistry",
+                        icon: "ph-tooth",
+                        accent: "sky",
+                        degrees: [
+                            { level: "ປະລິນຍາໂທ", program: "ສາຂາ ທັນຕະສາທາລະນະສຸກສາດ", female: 24, male: 18 },
+                            { level: "ປະລິນຍາໂທ", program: "ສາຂາ ຜ່າຕັດແຂ້ວຄາງໜ້າ", female: 24, male: 18 },
+                            { level: "ປະລິນຍາໂທ", program: "ສາຂາ ເວດຊະສາດປ້ອງກັນພະຍາດຊື້ມເຊື້ອຜົ້ງປາກ", female: 24, male: 18 }
+                        ]
+                    },
+                    {
+                        id: "pharm",
+                        shortName: "ຄະນະເພສັຊສາດ",
+                        fullName: "ຄະນະເພສັຊສາດ",
+                        enName: "Faculty of Pharmacy",
+                        icon: "ph-pill",
+                        accent: "emerald",
+                        degrees: [
+                            { level: "ປະລິນຍາໂທ", program: "ສາຂາ ການຄວບຄຸມຄຸນນະພາບຜະລິດຕະພັນ ເພສັຊກັມ", female: 32, male: 18 }
+                        ]
+                    },
+                    {
+                        id: "nurse",
+                        shortName: "ຄະນະພະຍາບານສາດ",
+                        fullName: "ຄະນະພະຍາບານສາດ",
+                        enName: "Faculty of Nursing Sciences",
+                        icon: "ph-first-aid-kit",
+                        accent: "rose",
+                        degrees: [
+                            { level: "ປະລິນຍາໂທ", program: "ສາຂາ ພະຍາບານສາດສາຂາ ການພະຍາບານຜູ້ໃຫຍ່", female: 42, male: 8 },
+                            { level: "ປະລິນຍາໂທ", program: "ສາຂາ ພະຍາບານສາດສາຂາ ຜະດຸງຄັນ", female: 42, male: 8 }
+                        ]
+                    },
+                    {
+                        id: "tech",
+                        shortName: "ຄະນະເຕັກນິກການແພດ",
+                        fullName: "ຄະນະເຕັກນິກການແພດ",
+                        enName: "Faculty of Medical Technology",
+                        icon: "ph-microscope",
+                        accent: "indigo",
+                        degrees: [
+                            { level: "ປະລິນຍາໂທ", program: "ສາຂາ ວິທະຍາສາດການແພດຊີວະໂມເລກຸນ", female: 22, male: 14 },
+                            { level: "ປະລິນຍາໂທ", program: "ສາຂາ ຈຸລິນຊີວິທະຍາທາງການແພດ", female: 20, male: 12 }
+                        ]
+                    },
+                    {
+                        id: "pubhealth",
+                        shortName: "ຄະນະສາທາລະນະສຸກສາດ",
+                        fullName: "ຄະນະສາທາລະນະສຸກສາດ",
+                        enName: "Faculty of Public Health",
+                        icon: "ph-globe-hemisphere-east",
+                        accent: "amber",
+                        degrees: [
+                            { level: "ປະລິນຍາໂທ", program: "ສາຂາ ບໍລິຫານສາທາລະນະສຸກ (ສາຍ La)", female: 36, male: 28 },
+                            { level: "ປະລິນຍາໂທ", program: "ສາຂາ ບໍລິຫານສາທາລະນະສຸກ (ສາຍ En)", female: 28, male: 22 },
+                            { level: "ປະລິນຍາໂທ", program: "ສາຂາ ລະບາດວິທະຍາ", female: 28, male: 22 },
+                            { level: "ປະລິນຍາໂທ", program: "ສາຂາ ໂພຊະນາການ", female: 28, male: 22 },
+                            { level: "ປະລິນຍາໂທ", program: "ສາຂາ ສຸຂະພາບຄອບຄົວ", female: 28, male: 22 },
+                            { level: "ປະລິນຍາໂທ", program: "ສາຂາ ອະນາໄມສີ່ງແວດລ້ອມ ແລະ ສຸຂະພາບຄອບຄົວ", female: 24, male: 12 },
+                            { level: "ປະລິນຍາເອກ", program: "ສາຂາ ບໍລິຫານສາທາລະນະສຸກສາດ", female: 12, male: 10 }
+                        ]
+                    }
+                ]
+            },
+            "2024-2025": {
+                faculties: [
+                    {
+                        id: "med",
+                        shortName: "ຄະນະແພດສາດ",
+                        fullName: "ຄະນະແພດສາດ",
+                        enName: "Faculty of Medicine",
+                        icon: "ph-heartbeat",
+                        accent: "teal",
+                        degrees: [
+                            { level: "ແພດລົງເລີກຂະແໜງ", program: "ສາຂາ ຈັກຂຸວິທະຍາ", female: 6, male: 12 },
+                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 1", program: "ສາຂາ ການແພດສຸກເສີນ", female: 28, male: 22 },
+                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 1", program: "ສາຂາ ການແພດຄອບຄົວ", female: 24, male: 12 },
+                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 1", program: "ສາຂາ ນາລີເວດ-ສູຕິສາດ", female: 22, male: 10 },
+                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 1", program: "ສາຂາ ອາຍຸຣະສາດ", female: 10, male: 24 },
+                            { level: "ປະລິນຍາໂທ", program: "ສາຂາ ການແພດຄອບຄົວ (ທາງໄກ)", female: 18, male: 14 }
+                        ]
+                    },
+                    {
+                        id: "dent",
+                        shortName: "ຄະນະທັນຕະແພດສາດ",
+                        fullName: "ຄະນະທັນຕະແພດສາດ",
+                        enName: "Faculty of Dentistry",
+                        icon: "ph-tooth",
+                        accent: "sky",
+                        degrees: [
+                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 1", program: "ສາຂາ ທັນຕະແພດສາດ", female: 21, male: 16 }
+                        ]
+                    },
+                    {
+                        id: "pharm",
+                        shortName: "ຄະນະເພສັຊສາດ",
+                        fullName: "ຄະນະເພສັຊສາດ",
+                        enName: "Faculty of Pharmacy",
+                        icon: "ph-pill",
+                        accent: "emerald",
+                        degrees: [
+                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 1", program: "ສາຂາ ເພສັຊຄລີນິກ", female: 23, male: 12 },
+                            { level: "ປະລິນຍາໂທ", program: "ສາຂາ ການຄຸ້ມຄອງ ແລະ ບໍລິຫານການຢາ", female: 29, male: 16 }
+                        ]
+                    },
+                    {
+                        id: "nurse",
+                        shortName: "ຄະນະພະຍາບານສາດ",
+                        fullName: "ຄະນະພະຍາບານສາດ",
+                        enName: "Faculty of Nursing Sciences",
+                        icon: "ph-first-aid-kit",
+                        accent: "rose",
+                        degrees: [
+                            { level: "ປະລິນຍາໂທ", program: "ສາຂາ ພະຍາບານສາດ", female: 38, male: 7 }
+                        ]
+                    },
+                    {
+                        id: "tech",
+                        shortName: "ຄະນະເຕັກນິກການແພດ",
+                        fullName: "ຄະນະເຕັກນິກການແພດ",
+                        enName: "Faculty of Medical Technology",
+                        icon: "ph-microscope",
+                        accent: "indigo",
+                        degrees: [
+                            { level: "ປະລິນຍາໂທ", program: "ສາຂາ ວິທະຍາສາດການແພດຊີວະໂມເລກຸນ", female: 19, male: 12 },
+                            { level: "ປະລິນຍາໂທ", program: "ສາຂາ ຈຸລິນຊີວິທະຍາທາງການແພດ", female: 18, male: 10 }
+                        ]
+                    },
+                    {
+                        id: "pubhealth",
+                        shortName: "ຄະນະສາທາລະນະສຸກສາດ",
+                        fullName: "ຄະນະສາທາລະນະສຸກສາດ",
+                        enName: "Faculty of Public Health",
+                        icon: "ph-globe-hemisphere-east",
+                        accent: "amber",
+                        degrees: [
+                            { level: "ປະລິນຍາໂທ", program: "ສາຂາ ສາທາລະນະສຸກສາດ", female: 32, male: 25 },
+                            { level: "ປະລິນຍາໂທ", program: "ສາຂາ ບໍລິຫານສາທາລະນະສຸກ", female: 25, male: 20 },
+                            { level: "ປະລິນຍາໂທ", program: "ສາຂາ ໂພຊະນາການສາດ", female: 21, male: 10 },
+                            { level: "ປະລິນຍາເອກ", program: "ສາຂາ ສາທາລະນະສຸກສາດ", female: 10, male: 8 }
+                        ]
+                    }
+                ]
+            }
+        };
+
+        /**
+         * 2. DATASET FOR UNDERGRADUATE & ASSOCIATE DEGREE (ຫຼັກສູດ ອະນຸປະລິນຍາ ແລະ ປະລິນຍາຕີ)
+         */
+        const initialUndergradDatabase = {
+            "2025-2026": {
+                faculties: [
+                    {
+                        id: "med",
+                        shortName: "ຄະນະແພດສາດ",
+                        fullName: "ຄະນະແພດສາດ",
+                        enName: "Faculty of Medicine",
+                        icon: "ph-heartbeat",
+                        accent: "teal",
+                        degrees: [
+                            { level: "ປະລິນຍາຕີ", program: "ສາຂາ ແພດສາດ (Doctor of Medicine)", female: 320, male: 245 }
+                        ]
+                    },
+                    {
+                        id: "dent",
+                        shortName: "ຄະນະທັນຕະແພດສາດ",
+                        fullName: "ຄະນະທັນຕະແພດສາດ",
+                        enName: "Faculty of Dentistry",
+                        icon: "ph-tooth",
+                        accent: "sky",
+                        degrees: [
+                            { level: "ປະລິນຍາຕີ", program: "ສາຂາ ທັນຕະແພດສາດ", female: 145, male: 98 },
+                            { level: "ອະນຸປະລິນຍາ", program: "ສາຂາ ຊ່າງທັນຕະກຳ", female: 42, male: 28 }
+                        ]
+                    },
+                    {
+                        id: "pharm",
+                        shortName: "ຄະນະເພສັຊສາດ",
+                        fullName: "ຄະນະເພສັຊສາດ",
+                        enName: "Faculty of Pharmacy",
+                        icon: "ph-pill",
+                        accent: "emerald",
+                        degrees: [
+                            { level: "ປະລິນຍາຕີ", program: "ສາຂາ ເພສັຊສາດ", female: 210, male: 115 }
+                        ]
+                    },
+                    {
+                        id: "nurse",
+                        shortName: "ຄະນະພະຍາບານສາດ",
+                        fullName: "ຄະນະພະຍາບານສາດ",
+                        enName: "Faculty of Nursing Sciences",
+                        icon: "ph-first-aid-kit",
+                        accent: "rose",
+                        degrees: [
+                            { level: "ປະລິນຍາຕີ", program: "ສາຂາ ພະຍາບານສາດ", female: 285, male: 65 },
+                            { level: "ປະລິນຍາຕີ", program: "ສາຂາ ຜະດຸງຄັນ", female: 130, male: 0 },
+                            { level: "ອະນຸປະລິນຍາ", program: "ສາຂາ ພະຍາບານສາດ", female: 95, male: 25 }
+                        ]
+                    },
+                    {
+                        id: "tech",
+                        shortName: "ຄະນະເຕັກນິກການແພດ",
+                        fullName: "ຄະນະເຕັກນິກການແພດ",
+                        enName: "Faculty of Medical Technology",
+                        icon: "ph-microscope",
+                        accent: "indigo",
+                        degrees: [
+                            { level: "ປະລິນຍາຕີ", program: "ສາຂາ ວິເຄາະການແພດ", female: 165, male: 92 },
+                            { level: "ປະລິນຍາຕີ", program: "ສາຂາ ກາຍະພາບບຳບັດ", female: 112, male: 74 },
+                            { level: "ປະລິນຍາຕີ", program: "ສາຂາ ລັງສີເຕັກນິກ", female: 88, male: 64 }
+                        ]
+                    },
+                    {
+                        id: "pubhealth",
+                        shortName: "ຄະນະສາທາລະນະສຸກສາດ",
+                        fullName: "ຄະນະສາທາລະນະສຸກສາດ",
+                        enName: "Faculty of Public Health",
+                        icon: "ph-globe-hemisphere-east",
+                        accent: "amber",
+                        degrees: [
+                            { level: "ປະລິນຍາຕີ", program: "ສາຂາ ສາທາລະນະສຸກສາດ", female: 140, male: 85 },
+                            { level: "ປະລິນຍາຕີ", program: "ສາຂາ ອະນາໄມສິ່ງແວດລ້ອມ", female: 76, male: 54 }
+                        ]
+                    }
+                ]
+            },
+            "2024-2025": {
+                faculties: [
+                    {
+                        id: "med",
+                        shortName: "ຄະນະແພດສາດ",
+                        fullName: "ຄະນະແພດສາດ",
+                        enName: "Faculty of Medicine",
+                        icon: "ph-heartbeat",
+                        accent: "teal",
+                        degrees: [
+                            { level: "ປະລິນຍາຕີ", program: "ສາຂາ ແພດສາດ (Doctor of Medicine)", female: 305, male: 230 }
+                        ]
+                    },
+                    {
+                        id: "dent",
+                        shortName: "ຄະນະທັນຕະແພດສາດ",
+                        fullName: "ຄະນະທັນຕະແພດສາດ",
+                        enName: "Faculty of Dentistry",
+                        icon: "ph-tooth",
+                        accent: "sky",
+                        degrees: [
+                            { level: "ປະລິນຍາຕີ", program: "ສາຂາ ທັນຕະແພດສາດ", female: 138, male: 92 },
+                            { level: "ອະນຸປະລິນຍາ", program: "ສາຂາ ຊ່າງທັນຕະກຳ", female: 38, male: 25 }
+                        ]
+                    },
+                    {
+                        id: "pharm",
+                        shortName: "ຄະນະເພສັຊສາດ",
+                        fullName: "ຄະນະເພສັຊສາດ",
+                        enName: "Faculty of Pharmacy",
+                        icon: "ph-pill",
+                        accent: "emerald",
+                        degrees: [
+                            { level: "ປະລິນຍາຕີ", program: "ສາຂາ ເພສັຊສາດ", female: 198, male: 108 }
+                        ]
+                    },
+                    {
+                        id: "nurse",
+                        shortName: "ຄະນະພະຍາບານສາດ",
+                        fullName: "ຄະນະພະຍາບານສາດ",
+                        enName: "Faculty of Nursing Sciences",
+                        icon: "ph-first-aid-kit",
+                        accent: "rose",
+                        degrees: [
+                            { level: "ປະລິນຍາຕີ", program: "ສາຂາ ພະຍາບານສາດ", female: 270, male: 60 },
+                            { level: "ປະລິນຍາຕີ", program: "ສາຂາ ຜະດຸງຄັນ", female: 120, male: 0 },
+                            { level: "ອະນຸປະລິນຍາ", program: "ສາຂາ ພະຍາບານສາດ", female: 90, male: 22 }
+                        ]
+                    },
+                    {
+                        id: "tech",
+                        shortName: "ຄະນະເຕັກນິກການແພດ",
+                        fullName: "ຄະນະເຕັກນິກການແພດ",
+                        enName: "Faculty of Medical Technology",
+                        icon: "ph-microscope",
+                        accent: "indigo",
+                        degrees: [
+                            { level: "ປະລິນຍາຕີ", program: "ສາຂາ ວິເຄາະການແພດ", female: 155, male: 88 },
+                            { level: "ປະລິນຍາຕີ", program: "ສາຂາ ກາຍະພາບບຳບັດ", female: 105, male: 70 },
+                            { level: "ປະລິນຍາຕີ", program: "ສາຂາ ລັງສີເຕັກນິກ", female: 82, male: 60 }
+                        ]
+                    },
+                    {
+                        id: "pubhealth",
+                        shortName: "ຄະນະສາທາລະນະສຸກສາດ",
+                        fullName: "ຄະນະສາທາລະນະສຸກສາດ",
+                        enName: "Faculty of Public Health",
+                        icon: "ph-globe-hemisphere-east",
+                        accent: "amber",
+                        degrees: [
+                            { level: "ປະລິນຍາຕີ", program: "ສາຂາ ສາທາລະນະສຸກສາດ", female: 132, male: 80 },
+                            { level: "ປະລິນຍາຕີ", program: "ສາຂາ ອະນາໄມສິ່ງແວດລ້ອມ", female: 72, male: 50 }
+                        ]
+                    }
+                ]
+            }
+        };
+
+        const initialOrgChart = [
+            { id: "head", roleLabel: "ຫົວໜ້າພະແນກ", tier: 1, name: "", duty: "ຊີ້ນຳລວມວຽກງານບໍລິຫານ ແລະ ວິຊາການ", phone: "" },
+            { id: "deputy", roleLabel: "ຮອງຫົວໜ້າພະແນກ", tier: 2, name: "", duty: "ຊ່ວຍວຽກຫົວໜ້າພະແນກ ດ້ານວິຊາການ ແລະ ຄຸ້ມຄອງນັກສຶກສາ", phone: "" },
+            { id: "officer1", roleLabel: "ວິຊາການ ຕຳແໜ່ງທີ 1", tier: 3, name: "", duty: "ຮັບຜິດຊອບວຽກງານຫຼັກສູດ ແລະ ແຜນການຮຽນ-ການສອນ", phone: "" },
+            { id: "officer2", roleLabel: "ວິຊາການ ຕຳແໜ່ງທີ 2", tier: 3, name: "", duty: "ຮັບຜິດຊອບວຽກງານທະບຽນ ແລະ ສະຖິຕິນັກສຶກສາ", phone: "" },
+            { id: "officer3", roleLabel: "ວິຊາການ ຕຳແໜ່ງທີ 3", tier: 3, name: "", duty: "ຮັບຜິດຊອບວຽກງານຄົ້ນຄວ້າວິທະຍາສາດ ແລະ ປະເມີນຜົນ", phone: "" },
+            { id: "officer4", roleLabel: "ວິຊາການ ຕຳແໜ່ງທີ 4", tier: 3, name: "", duty: "ຮັບຜິດຊອບວຽກງານປະກັນຄຸນນະພາບ ແລະ ບໍລິຫານຫ້ອງການ", phone: "" }
+        ];
+
+        const initialPostgradNews = [
+            {
+                id: 1,
+                category: "ແຈ້ງການຮັບສະໝັກ",
+                date: "10 ພະຈິກ 2026",
+                title: "ເປີດຮັບສະໝັກນັກສຶກສາ ລະດັບແພດລົງເລີກຂະແໜງ, ຊ່ຽວຊານຂັ້ນ 1 ແລະ ປະລິນຍາໂທ",
+                content: "ພະແນກ ການສຶກສາຫຼັງປະລິນຍາຕີ ຂໍແຈ້ງມາຍັງພະນັກງານແພດ-ໝໍ ທົ່ວປະເທດ ຊາບວ່າ ໄດ້ເລີ່ມເປີດຮັບຄຳຮ້ອງສະໝັກສອບເສັງຄັດເລືອກເຂົ້າຮຽນຕໍ່ ໃນ 6 ຄະນະວິຊາ ຕັ້ງແຕ່ວັນນີ້ເປັນຕົ້ນໄປ."
+            },
+            {
+                id: 2,
+                category: "ກອງປະຊຸມວິຊາການ",
+                date: "02 ພະຈິກ 2026",
+                title: "ກອງປະຊຸມປ້ອງກັນບົດວິທະຍານິພົນ ລະດັບປະລິນຍາໂທ ແລະ ຊ່ຽວຊານຂັ້ນ 2",
+                content: "ກຳນົດການປ້ອງກັນບົດວິທະຍານິພົນ ປະຈຳພາກຮຽນທີ 1 ຈະຈັດຂຶ້ນທີ່ຫ້ອງປະຊຸມໃຫຍ່ ມະຫາວິທະຍາໄລ ວິທະຍາສາດ ສຸຂະພາບ."
+            },
+            {
+                id: 3,
+                category: "ທຶນການສຶກສາ",
+                date: "25 ຕຸລາ 2026",
+                title: "ປະກາດລາຍຊື່ຜູ້ໄດ້ຮັບທຶນການສຶກສາແລກປ່ຽນວິໄຈທາງການແພດ",
+                content: "ນັກສຶກສາຫຼັງປະລິນຍາຕີ ທີ່ມີຜົນການຮຽນດີເດັ່ນ ສາມາດກວດສອບລາຍຊື່ ແລະ ຍື່ນເອກະສານໄດ້ທີ່ຫ້ອງການພະແນກ ການສຶກສາຫຼັງປະລິນຍາຕີ."
+            }
+        ];
+
+        const initialUndergradNews = [
+            {
+                id: 101,
+                category: "ແຈ້ງການຮັບສະໝັກ",
+                date: "12 ພະຈິກ 2026",
+                title: "ປະກາດແຜນຮັບນັກສຶກສາໃໝ່ ລະດັບອະນຸປະລິນຍາ ແລະ ປະລິນຍາຕີ",
+                content: "ພະແນກ ການສຶກສາກ່ອນປະລິນຍາຕີ ຂໍແຈ້ງມາຍັງນັກຮຽນມັດທະຍົມຕອນປາຍທົ່ວປະເທດ ກ່ຽວກັບກຳນົດການສອບເສັງຄັດເລືອກເຂົ້າຮຽນໃນ 6 ຄະນະວິຊາ ຂອງ ມວສຊ."
+            },
+            {
+                id: 102,
+                category: "ແຈ້ງການທົ່ວໄປ",
+                date: "05 ພະຈິກ 2026",
+                title: "ກຳນົດການລົງທະບຽນຮຽນ ແລະ ກວດສຸຂະພາບປະຈຳພາກຮຽນທີ 1",
+                content: "ນັກສຶກສາລະດັບອະນຸປະລິນຍາ ແລະ ປະລິນຍາຕີ ທຸກຊັ້ນປີ ສາມາດດຳເນີນການລົງທະບຽນຜ່ານລະບົບ ແລະ ຫ້ອງການວິຊາການແຕ່ລະຄະນະ."
+            }
+        ];
+
+        function loadSavedData(key, fallback) {
+            try {
+                const raw = localStorage.getItem(key);
+                const parsed = raw ? JSON.parse(raw) : JSON.parse(JSON.stringify(fallback));
+                // ຮັບປະກັນວ່າສົກຮຽນໃໝ່ (2026-2027 ຫາ 2029-2030) ມີໂຄງສ້າງຄົບຖ້ວນເຖິງແມ່ນຈະມີຂໍ້ມູນເກົ່າຄ້າງໃນ Browser
+                Object.keys(fallback).forEach(yr => {
+                    if (!parsed[yr]) {
+                        parsed[yr] = JSON.parse(JSON.stringify(fallback[yr]));
+                    }
+                });
+                return parsed;
+            } catch (e) {
+                return JSON.parse(JSON.stringify(fallback));
+            }
+        }
+
+        // ຟັງຊັນສ້າງຂໍ້ມູນສົກຮຽນອະນາຄົດ (2026-2027 ຮອດ 2029-2030) ໂດຍຄັດລອກໂຄງສ້າງສາຂາຈາກ 2025-2026 ແລະ ຕັ້ງຄ່າເລີ່ມຕົ້ນເປັນ 0
+        function populateFutureAcademicYears(dbObj) {
+            const futureYears = ["2026-2027", "2027-2028", "2028-2029", "2029-2030"];
+            const template = dbObj["2025-2026"];
+            if (!template) return;
+
+            futureYears.forEach(yr => {
+                if (!dbObj[yr]) {
+                    const clonedYear = JSON.parse(JSON.stringify(template));
+                    clonedYear.faculties.forEach(fac => {
+                        fac.degrees.forEach(deg => {
+                            deg.female = 0;
+                            deg.male = 0;
+                        });
+                    });
+                    dbObj[yr] = clonedYear;
+                }
+            });
+        }
+
+        populateFutureAcademicYears(initialPostgradDatabase);
+        populateFutureAcademicYears(initialUndergradDatabase);
+
+        function saveToStorage(key, data) {
+            try {
+                localStorage.setItem(key, JSON.stringify(data));
+            } catch (e) {
+                console.warn('Storage save skipped:', e);
+            }
+        }
+
+        const stateByCategory = {
+            postgrad: {
+                title: "ຫຼັກສູດ ຫຼັງປະລິນຍາຕີ",
+                shortTitle: "ຫຼັງປະລິນຍາຕີ",
+                deptName: "ພະແນກ ການສຶກສາຫຼັງປະລິນຍາຕີ",
+                statsKey: STORAGE_KEYS.POSTGRAD_STATS,
+                orgKey: STORAGE_KEYS.POSTGRAD_ORG,
+                newsKey: STORAGE_KEYS.POSTGRAD_NEWS,
+                initialStats: initialPostgradDatabase,
+                appData: loadSavedData(STORAGE_KEYS.POSTGRAD_STATS, initialPostgradDatabase),
+                orgData: loadSavedData(STORAGE_KEYS.POSTGRAD_ORG, initialOrgChart),
+                newsData: loadSavedData(STORAGE_KEYS.POSTGRAD_NEWS, initialPostgradNews)
+            },
+            undergrad: {
+                title: "ຫຼັກສູດ ອະນຸປະລິນຍາ ແລະ ປະລິນຍາຕີ",
+                shortTitle: "ອະນຸປະລິນຍາ & ປະລິນຍາຕີ",
+                deptName: "ພະແນກ ການສຶກສາກ່ອນປະລິນຍາຕີ",
+                statsKey: STORAGE_KEYS.UNDERGRAD_STATS,
+                orgKey: STORAGE_KEYS.UNDERGRAD_ORG,
+                newsKey: STORAGE_KEYS.UNDERGRAD_NEWS,
+                initialStats: initialUndergradDatabase,
+                appData: loadSavedData(STORAGE_KEYS.UNDERGRAD_STATS, initialUndergradDatabase),
+                orgData: loadSavedData(STORAGE_KEYS.UNDERGRAD_ORG, initialOrgChart),
+                newsData: loadSavedData(STORAGE_KEYS.UNDERGRAD_NEWS, initialUndergradNews)
+            }
+        };
+
+        let activeCategory = 'postgrad';
+        let currentYear = "2025-2026";
+        let activeFacultyId = null;
+
+        const getStore = () => stateByCategory[activeCategory];
+
+        // ລະບົບບັນຊີຜູ້ໃຊ້ 7 ບັນຊີ (1 Super Admin + 6 ຄະນະວິຊາ)
+        const USER_ACCOUNTS = {
+            "admin": { password: "nuhs2026", role: "admin",   facultyId: "all",       label: "ຜູ້ດູແລລະບົບສູງສຸດ (Admin)" },
+            "md":    { password: "MD@2026",  role: "faculty", facultyId: "med",       label: "ຄະນະແພດສາດ" },
+            "pm":    { password: "PM2@2026", role: "faculty", facultyId: "pharm",     label: "ຄະນະເພສັຊສາດ" },
+            "dt":    { password: "DT3@2026", role: "faculty", facultyId: "dent",      label: "ຄະນະທັນຕະແພດສາດ" },
+            "ns":    { password: "NS4@2026", role: "faculty", facultyId: "nurse",     label: "ຄະນະພະຍາບານສາດ" },
+            "mt":    { password: "MT5@2026", role: "faculty", facultyId: "tech",      label: "ຄະນະເຕັກນິກການແພດ" },
+            "ph":    { password: "PH6@2026", role: "faculty", facultyId: "pubhealth", label: "ຄະນະສາທາລະນະສຸກສາດ" }
+        };
+
+        let currentUser = null;
+        let pendingAuthAction = null;
+        let pendingRequiredFacultyId = null;
+        let modalTempDegrees = [];
+
+        function togglePasswordVisibility() {
+            const passInput = document.getElementById('loginPassword');
+            const eyeIcon = document.getElementById('togglePasswordIcon');
+            if (passInput.type === 'password') {
+                passInput.type = 'text';
+                eyeIcon.className = 'ph ph-eye-slash text-base text-teal-700';
+            } else {
+                passInput.type = 'password';
+                eyeIcon.className = 'ph ph-eye text-base';
+            }
+        }
+
+        function requireAuth(actionCallback, requiredFacultyId = null) {
+            if (currentUser) {
+                if (currentUser.role === 'admin') {
+                    actionCallback();
+                    return;
+                }
+                if (requiredFacultyId === 'admin') {
+                    showToast('ຂໍອະໄພ! ສະເພາະ Admin ເທົ່ານັ້ນທີ່ສາມາດແກ້ໄຂສ່ວນນີ້ໄດ້', true);
+                    return;
+                }
+                if (requiredFacultyId && currentUser.facultyId !== requiredFacultyId) {
+                    showToast(`ທ່ານມີສິດແກ້ໄຂສະເພາະ "${currentUser.label}" ເທົ່ານັ້ນ!`, true);
+                    return;
+                }
+                actionCallback();
+            } else {
+                pendingAuthAction = actionCallback;
+                pendingRequiredFacultyId = requiredFacultyId;
+                openLoginModal();
+            }
+        }
+
+        function openLoginModal() {
+            document.getElementById('loginForm').reset();
+            document.getElementById('loginErrorMsg').classList.add('hidden');
+            const passInput = document.getElementById('loginPassword');
+            const eyeIcon = document.getElementById('togglePasswordIcon');
+            if (passInput) passInput.type = 'password';
+            if (eyeIcon) eyeIcon.className = 'ph ph-eye text-base';
+
+            const modal = document.getElementById('loginModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            setTimeout(() => document.getElementById('loginUsername').focus(), 100);
+        }
+
+        function closeLoginModal() {
+            const modal = document.getElementById('loginModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function handleAuthHeaderAction() {
+            if (currentUser) {
+                currentUser = null;
+                pendingAuthAction = null;
+                pendingRequiredFacultyId = null;
+                updateAuthUI();
+                if (!document.getElementById('orgChartView').classList.contains('hidden')) {
+                    renderOrgChart();
+                }
+                showToast('ອອກຈາກລະບົບແລ້ວ (ໂໝດເບິ່ງຂໍ້ມູນເທົ່ານັ້ນ)');
+            } else {
+                pendingAuthAction = null;
+                pendingRequiredFacultyId = null;
+                openLoginModal();
+            }
+        }
+
+        function updateAuthUI() {
+            const badge = document.getElementById('authStatusBadge');
+            const headerBtn = document.getElementById('authHeaderActionBtn');
+            const lockIcons = document.querySelectorAll('.lock-indicator');
+
+            if (currentUser) {
+                badge.innerHTML = `
+                    <i class="ph-fill ph-lock-simple-open text-emerald-400"></i>
+                    <span class="text-emerald-200 truncate max-w-[210px]">ສິດ: <strong>${currentUser.label}</strong></span>
+                `;
+                headerBtn.innerHTML = `
+                    <i class="ph-bold ph-sign-out text-rose-300"></i>
+                    <span class="text-rose-300 hover:text-rose-200">ອອກຈາກລະບົບ</span>
+                `;
+                lockIcons.forEach(icon => {
+                    icon.className = 'ph-bold ph-pencil-simple-line lock-indicator text-emerald-300';
+                });
+            } else {
+                badge.innerHTML = `
+                    <i class="ph-fill ph-lock-key text-amber-400"></i>
+                    <span>ສະຖານະ: <strong>ເບິ່ງຂໍ້ມູນເທົ່ານັ້ນ (View Only)</strong></span>
+                `;
+                headerBtn.innerHTML = `
+                    <i class="ph-bold ph-sign-in"></i>
+                    <span>ເຂົ້າສູ່ລະບົບ</span>
+                `;
+                lockIcons.forEach(icon => {
+                    icon.className = 'ph-bold ph-lock-simple lock-indicator text-amber-300';
+                });
+            }
+        }
+
+        const formatNum = (num) => Number(num).toLocaleString('en-US');
+
+        function getFacultyTotals(faculty) {
+            let female = 0;
+            let male = 0;
+            faculty.degrees.forEach(d => {
+                female += d.female;
+                male += d.male;
+            });
+            return { female, male, total: female + male };
+        }
+
+        function getCategoryTotals(catKey) {
+            let totalFemale = 0;
+            let totalMale = 0;
+            let totalPrograms = 0;
+            const faculties = stateByCategory[catKey].appData[currentYear].faculties;
+            faculties.forEach(f => {
+                const stats = getFacultyTotals(f);
+                totalFemale += stats.female;
+                totalMale += stats.male;
+                totalPrograms += f.degrees.length;
+            });
+            return {
+                female: totalFemale,
+                male: totalMale,
+                total: totalFemale + totalMale,
+                programs: totalPrograms
+            };
+        }
+
+        function renderPortalView() {
+            const undergradTotals = getCategoryTotals('undergrad');
+            const postgradTotals = getCategoryTotals('postgrad');
+
+            const grandTotal = undergradTotals.total + postgradTotals.total;
+            const grandFemale = undergradTotals.female + postgradTotals.female;
+            const grandMale = undergradTotals.male + postgradTotals.male;
+
+            document.getElementById('headerSubTitle').textContent = 'ລະບົບຖານຂໍ້ມູນນັກສຶກສາທົ່ວມະຫາວິທະຍາໄລ';
+            document.getElementById('portalYearLabel').textContent = `ສົກຮຽນ ${currentYear}`;
+            document.getElementById('portalGrandTotal').textContent = formatNum(grandTotal);
+            document.getElementById('portalGrandFemale').textContent = formatNum(grandFemale);
+            document.getElementById('portalGrandMale').textContent = formatNum(grandMale);
+
+            document.getElementById('portalUndergradSubtitle').textContent = `ພະແນກ ການສຶກສາກ່ອນປະລິນຍາຕີ • 6 ຄະນະ (${undergradTotals.programs} ຫຼັກສູດ)`;
+            document.getElementById('portalPostgradSubtitle').textContent = `ພະແນກ ການສຶກສາຫຼັງປະລິນຍາຕີ • 6 ຄະນະ (${postgradTotals.programs} ຫຼັກສູດ)`;
+
+            document.getElementById('portalUndergradCount').textContent = formatNum(undergradTotals.total);
+            document.getElementById('portalPostgradCount').textContent = formatNum(postgradTotals.total);
+        }
+
+        function navigateToPortal() {
+            activeFacultyId = null;
+            renderPortalView();
+            switchView('portalView');
+        }
+
+        function selectProgramCategory(categoryKey) {
+            activeCategory = categoryKey;
+            activeFacultyId = null;
+            const store = getStore();
+            document.getElementById('headerSubTitle').textContent = store.deptName;
+            renderHomeView();
+            switchView('homeView');
+        }
+
+        function renderHomeView() {
+            const store = getStore();
+            const grand = getCategoryTotals(activeCategory);
+            const femalePct = grand.total > 0 ? ((grand.female / grand.total) * 100).toFixed(1) : 0;
+            const malePct = grand.total > 0 ? ((grand.male / grand.total) * 100).toFixed(1) : 0;
+
+            document.getElementById('currentCategoryPill').textContent = store.shortTitle;
+            document.getElementById('heroYearLabel').textContent = `ສົກຮຽນ ${currentYear}`;
+            document.getElementById('heroSubtitleDesc').textContent = `${store.title} (6 ຄະນະ • ${grand.programs} ຫຼັກສູດ)`;
+            document.getElementById('heroTotalCount').textContent = formatNum(grand.total);
+            document.getElementById('heroFemaleCount').textContent = formatNum(grand.female);
+            document.getElementById('heroMaleCount').textContent = formatNum(grand.male);
+            document.getElementById('heroFemalePct').textContent = `(${femalePct}%)`;
+            document.getElementById('heroMalePct').textContent = `(${malePct}%)`;
+            document.getElementById('heroFemaleBar').style.width = `${femalePct}%`;
+            document.getElementById('heroMaleBar').style.width = `${malePct}%`;
+
+            const heroSection = document.getElementById('heroCardSection');
+            if (activeCategory === 'undergrad') {
+                heroSection.className = "relative overflow-hidden rounded-3xl bg-gradient-to-br from-navy-900 via-sky-900 to-blue-700 text-white p-5 shadow-lg shadow-sky-950/20 border border-sky-700/50";
+            } else {
+                heroSection.className = "relative overflow-hidden rounded-3xl bg-gradient-to-br from-navy-900 via-teal-900 to-teal-700 text-white p-5 shadow-lg shadow-teal-950/20 border border-teal-700/50";
+            }
+
+            const gridContainer = document.getElementById('gridMenuContainer');
+            const faculties = store.appData[currentYear].faculties;
+
+            const accentMap = {
+                teal: 'bg-teal-50 text-teal-700 border-teal-100 group-hover:bg-teal-600 group-hover:text-white',
+                sky: 'bg-sky-50 text-sky-700 border-sky-100 group-hover:bg-sky-600 group-hover:text-white',
+                emerald: 'bg-emerald-50 text-emerald-700 border-emerald-100 group-hover:bg-emerald-600 group-hover:text-white',
+                rose: 'bg-rose-50 text-rose-600 border-rose-100 group-hover:bg-rose-600 group-hover:text-white',
+                indigo: 'bg-indigo-50 text-indigo-700 border-indigo-100 group-hover:bg-indigo-600 group-hover:text-white',
+                amber: 'bg-amber-50 text-amber-700 border-amber-100 group-hover:bg-amber-600 group-hover:text-white'
+            };
+
+            const facultyButtonsHTML = faculties.map(f => {
+                const stats = getFacultyTotals(f);
+                const iconStyle = accentMap[f.accent] || accentMap.teal;
+
+                return `
+                    <button 
+                        onclick="openFacultyDetail('${f.id}')" 
+                        class="group bg-white hover:bg-teal-50/40 active:scale-95 rounded-2xl p-3 shadow-xs border border-slate-200/90 hover:border-teal-400 flex flex-col items-center justify-between text-center transition-all cursor-pointer min-h-[118px]"
+                    >
+                        <div class="w-10 h-10 rounded-xl border flex items-center justify-center transition-colors ${iconStyle}">
+                            <i class="ph-fill ${f.icon} text-xl"></i>
+                        </div>
+                        <span class="text-[11px] sm:text-xs font-bold text-navy-900 leading-tight mt-2 line-clamp-2">${f.shortName}</span>
+                        <span class="mt-1.5 inline-block text-xs font-extrabold text-teal-700 bg-teal-50 px-2 py-0.5 rounded-full">
+                            ${formatNum(stats.total)} ຄົນ
+                        </span>
+                    </button>
+                `;
+            }).join('');
+
+            const utilityButtonsHTML = `
+                <button 
+                    onclick="openNewsView()" 
+                    class="group bg-gradient-to-b from-white to-slate-50 hover:to-teal-50/50 active:scale-95 rounded-2xl p-3 shadow-xs border border-slate-200/90 hover:border-teal-400 flex flex-col items-center justify-between text-center transition-all cursor-pointer min-h-[118px]"
+                >
+                    <div class="w-10 h-10 rounded-xl bg-navy-900 text-emerald-300 flex items-center justify-center shadow-2xs group-hover:bg-teal-700 group-hover:text-white transition-colors">
+                        <i class="ph-fill ph-newspaper text-xl"></i>
+                    </div>
+                    <span class="text-[11px] sm:text-xs font-bold text-navy-900 leading-tight mt-2">ຂໍ້ມູນຂ່າວສານ</span>
+                    <span class="mt-1.5 inline-block text-[10px] font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200/80 px-2 py-0.5 rounded-full">
+                        ${store.newsData.length} ແຈ້ງການ
+                    </span>
+                </button>
+
+                <button 
+                    onclick="openOrgChartView()" 
+                    class="group bg-gradient-to-b from-white to-slate-50 hover:to-teal-50/50 active:scale-95 rounded-2xl p-3 shadow-xs border border-slate-200/90 hover:border-teal-400 flex flex-col items-center justify-between text-center transition-all cursor-pointer min-h-[118px]"
+                >
+                    <div class="w-10 h-10 rounded-xl bg-navy-900 text-emerald-300 flex items-center justify-center shadow-2xs group-hover:bg-teal-700 group-hover:text-white transition-colors">
+                        <i class="ph-fill ph-tree-structure text-xl"></i>
+                    </div>
+                    <span class="text-[11px] sm:text-xs font-bold text-navy-900 leading-tight mt-2">ໂຄງຮ່າງການຈັດຕັ້ງ</span>
+                    <span class="mt-1.5 inline-block text-[10px] font-semibold text-teal-700 bg-teal-50 border border-teal-200/80 px-2 py-0.5 rounded-full">
+                        6 ຕຳແໜ່ງ
+                    </span>
+                </button>
+
+                <button 
+                    onclick="switchView('versionView')" 
+                    class="group bg-gradient-to-b from-white to-slate-50 hover:to-teal-50/50 active:scale-95 rounded-2xl p-3 shadow-xs border border-slate-200/90 hover:border-teal-400 flex flex-col items-center justify-between text-center transition-all cursor-pointer min-h-[118px]"
+                >
+                    <div class="w-10 h-10 rounded-xl bg-navy-900 text-emerald-300 flex items-center justify-center shadow-2xs group-hover:bg-teal-700 group-hover:text-white transition-colors">
+                        <i class="ph-fill ph-info text-xl"></i>
+                    </div>
+                    <span class="text-[11px] sm:text-xs font-bold text-navy-900 leading-tight mt-2">Version ລະບົບ</span>
+                    <span class="mt-1.5 inline-block text-[10px] font-bold text-slate-600 bg-slate-100 border border-slate-200 px-2 py-0.5 rounded-full">
+                        v2.2.0
+                    </span>
+                </button>
+            `;
+
+            gridContainer.innerHTML = facultyButtonsHTML + utilityButtonsHTML;
+        }
+
+        function switchView(viewId) {
+            const views = ['portalView', 'homeView', 'facultyDetailView', 'newsView', 'orgChartView', 'versionView'];
+            views.forEach(id => {
+                const el = document.getElementById(id);
+                if (id === viewId) {
+                    el.classList.remove('hidden');
+                } else {
+                    el.classList.add('hidden');
+                }
+            });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function navigateToHome() {
+            activeFacultyId = null;
+            renderHomeView();
+            switchView('homeView');
+        }
+
+        function openFacultyDetail(facultyId) {
+            activeFacultyId = facultyId;
+            const store = getStore();
+            const faculty = store.appData[currentYear].faculties.find(f => f.id === facultyId);
+            if (!faculty) return;
+
+            const stats = getFacultyTotals(faculty);
+
+            document.getElementById('detailDeptBadge').textContent = store.deptName;
+            document.getElementById('detailFacultyIcon').className = `ph-fill ${faculty.icon} text-3xl text-emerald-300`;
+            document.getElementById('detailFacultyName').textContent = faculty.fullName;
+            document.getElementById('detailFacultyEnName').textContent = `${faculty.enName} • ${faculty.degrees.length} ຫຼັກສູດ`;
+            document.getElementById('detailTableHeaderTitle').textContent = `ຫຼັກສູດຂອງ${faculty.shortName} (${faculty.degrees.length} ຫຼັກສູດ)`;
+            document.getElementById('detailTotalNum').textContent = formatNum(stats.total);
+            document.getElementById('detailFemaleNum').textContent = formatNum(stats.female);
+            document.getElementById('detailMaleNum').textContent = formatNum(stats.male);
+
+            // ກວດສອບສິດສະເພາະຄະນະນີ້ເມື່ອກົດປຸ່ມແກ້ໄຂ
+            document.getElementById('editCurrentFacultyBtn').onclick = () => requireAuth(() => openQuickEditModal(faculty.id), faculty.id);
+
+            const tbody = document.getElementById('degreeTableBody');
+            let rowsHTML = '';
+            let currentGroupLevel = null;
+            let itemCounter = 0;
+
+            faculty.degrees.forEach((d) => {
+                if (d.level !== currentGroupLevel) {
+                    currentGroupLevel = d.level;
+                    itemCounter = 0;
+                    const levelItems = faculty.degrees.filter(item => item.level === currentGroupLevel);
+                    const subF = levelItems.reduce((acc, it) => acc + it.female, 0);
+                    const subM = levelItems.reduce((acc, it) => acc + it.male, 0);
+                    const subT = subF + subM;
+
+                    rowsHTML += `
+                        <tr class="bg-teal-50/70 border-y border-teal-200/70">
+                            <td class="py-2 pl-4 pr-2 font-extrabold text-xs text-teal-900">
+                                <span class="inline-flex items-center gap-1.5">
+                                    <i class="ph-fill ph-graduation-cap text-teal-600"></i>
+                                    <span>ລະດັບ ${currentGroupLevel}</span>
+                                </span>
+                            </td>
+                            <td class="py-2 px-2 text-center text-[11px] font-bold text-rose-600">${formatNum(subF)}</td>
+                            <td class="py-2 px-2 text-center text-[11px] font-bold text-teal-700">${formatNum(subM)}</td>
+                            <td class="py-2 pl-2 pr-4 text-right text-[11px] font-extrabold text-teal-900">${formatNum(subT)}</td>
+                        </tr>
+                    `;
+                }
+
+                itemCounter++;
+                const rowTotal = d.female + d.male;
+                rowsHTML += `
+                    <tr class="hover:bg-slate-50/90 transition-colors">
+                        <td class="py-2.5 pl-6 pr-2 font-medium text-navy-900 leading-snug">
+                            <span class="inline-block w-5 text-slate-400 font-normal text-xs">${itemCounter}.</span>${d.program}
+                        </td>
+                        <td class="py-2.5 px-2 text-center font-semibold text-rose-600">${formatNum(d.female)}</td>
+                        <td class="py-2.5 px-2 text-center font-semibold text-teal-700">${formatNum(d.male)}</td>
+                        <td class="py-2.5 pl-2 pr-4 text-right font-extrabold text-navy-900">${formatNum(rowTotal)}</td>
+                    </tr>
+                `;
+            });
+
+            tbody.innerHTML = rowsHTML;
+
+            const tfoot = document.getElementById('degreeTableFoot');
+            tfoot.innerHTML = `
+                <tr>
+                    <td class="py-3 pl-4 pr-2 text-teal-900">ລວມທັງໝົດ (${faculty.degrees.length} ຫຼັກສູດ)</td>
+                    <td class="py-3 px-2 text-center text-rose-700">${formatNum(stats.female)}</td>
+                    <td class="py-3 px-2 text-center text-teal-800">${formatNum(stats.male)}</td>
+                    <td class="py-3 pl-2 pr-4 text-right text-base font-extrabold text-teal-900">${formatNum(stats.total)} ຄົນ</td>
+                </tr>
+            `;
+
+            switchView('facultyDetailView');
+        }
+
+        function openOrgChartView() {
+            document.getElementById('orgDeptSubtitle').textContent = `${getStore().deptName} ມວສ`;
+            renderOrgChart();
+            switchView('orgChartView');
+        }
+
+        function renderOrgChart() {
+            const container = document.getElementById('orgChartContainer');
+            const currentOrg = getStore().orgData;
+            const head = currentOrg.find(p => p.id === 'head');
+            const deputy = currentOrg.find(p => p.id === 'deputy');
+            const officers = currentOrg.filter(p => p.tier === 3);
+
+            const renderNameDisplay = (person, isLightText = false) => {
+                if (person.name && person.name.trim() !== '') {
+                    return `<p class="font-bold text-sm sm:text-base ${isLightText ? 'text-white' : 'text-navy-900'} mt-1">${person.name}</p>`;
+                }
+                const hintText = (currentUser && currentUser.role === 'admin')
+                    ? '[ ຍັງບໍ່ທັນໄດ້ລະບຸຊື່ • ກົດແກ້ໄຂເພື່ອໃສ່ຊື່ ]'
+                    : '[ ຍັງບໍ່ທັນໄດ້ລະບຸຊື່ ]';
+                return `<p class="text-xs italic ${isLightText ? 'text-amber-200/90' : 'text-slate-400'} mt-1">${hintText}</p>`;
+            };
+
+            const renderPhoneDisplay = (person, isLightText = false) => {
+                if (person.phone && person.phone.trim() !== '') {
+                    return `<p class="text-[11px] ${isLightText ? 'text-emerald-200' : 'text-teal-700'} mt-1 flex items-center justify-center gap-1"><i class="ph-fill ph-phone"></i> ${person.phone}</p>`;
+                }
+                return '';
+            };
+
+            container.innerHTML = `
+                <div onclick="requireAuth(() => openOrgEditModal(), 'admin')" class="w-full bg-gradient-to-r from-navy-900 to-teal-800 text-white rounded-2xl p-4 text-center shadow-md border border-teal-700 cursor-pointer hover:opacity-95 transition-opacity">
+                    <span class="inline-block text-[10px] font-bold uppercase tracking-wider bg-emerald-500/20 text-emerald-300 px-3 py-0.5 rounded-full">
+                        ${head.roleLabel}
+                    </span>
+                    ${renderNameDisplay(head, true)}
+                    <p class="text-[11px] text-teal-100 mt-1">${head.duty}</p>
+                    ${renderPhoneDisplay(head, true)}
+                </div>
+
+                <div class="w-0.5 h-5 bg-teal-600"></div>
+
+                <div onclick="requireAuth(() => openOrgEditModal(), 'admin')" class="w-full max-w-sm bg-teal-50 border-2 border-teal-600/30 rounded-2xl p-3.5 text-center shadow-2xs cursor-pointer hover:border-teal-500 transition-colors">
+                    <span class="inline-block text-[10px] font-bold text-teal-800 bg-white px-3 py-0.5 rounded-full border border-teal-200">
+                        ${deputy.roleLabel}
+                    </span>
+                    ${renderNameDisplay(deputy, false)}
+                    <p class="text-[11px] text-slate-600 mt-1">${deputy.duty}</p>
+                    ${renderPhoneDisplay(deputy, false)}
+                </div>
+
+                <div class="w-0.5 h-5 bg-slate-300"></div>
+
+                <div class="mb-3">
+                    <span class="text-[11px] font-bold text-slate-600 bg-slate-100 border border-slate-200 px-3 py-1 rounded-full">
+                        ໜ່ວຍງານວິຊາການ (4 ຕຳແໜ່ງ)
+                    </span>
+                </div>
+
+                <div class="w-full grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    ${officers.map((off, index) => `
+                        <div onclick="requireAuth(() => openOrgEditModal(), 'admin')" class="bg-slate-50 hover:bg-teal-50/40 border border-slate-200 rounded-2xl p-3.5 text-center transition-colors cursor-pointer flex flex-col justify-between">
+                            <div>
+                                <div class="inline-flex items-center gap-1.5 bg-white border border-slate-200 px-2.5 py-0.5 rounded-full">
+                                    <span class="w-4 h-4 rounded-full bg-teal-700 text-white text-[10px] font-bold flex items-center justify-center">${index + 1}</span>
+                                    <span class="text-[11px] font-bold text-navy-900">${off.roleLabel}</span>
+                                </div>
+                                ${renderNameDisplay(off, false)}
+                                <p class="text-[11px] text-slate-500 mt-1 leading-relaxed">${off.duty}</p>
+                            </div>
+                            ${renderPhoneDisplay(off, false)}
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        function openOrgEditModal() {
+            const store = getStore();
+            document.getElementById('orgModalSubtitle').textContent = store.deptName;
+            const container = document.getElementById('orgInputsContainer');
+            container.innerHTML = store.orgData.map((person, idx) => `
+                <div class="bg-slate-50 p-3 rounded-2xl border border-slate-200 space-y-2">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-extrabold text-teal-800">${person.roleLabel}</span>
+                    </div>
+                    <div>
+                        <input type="text" data-org-idx="${idx}" data-field="name" value="${person.name}" 
+                            placeholder="ຊື່ ແລະ ນາມສະກຸນ (ເຊັ່ນ: ດຣ. ນາງ ...)" 
+                            class="org-field-input w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-semibold text-navy-900 focus:outline-none focus:ring-2 focus:ring-teal-600">
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        <input type="text" data-org-idx="${idx}" data-field="duty" value="${person.duty}" 
+                            placeholder="ໜ້າທີ່ຮັບຜິດຊອບ" 
+                            class="org-field-input w-full px-3 py-1.5 bg-white border border-slate-200 rounded-xl text-[11px] text-slate-700 focus:outline-none focus:ring-2 focus:ring-teal-600">
+                        <input type="text" data-org-idx="${idx}" data-field="phone" value="${person.phone}" 
+                            placeholder="ເບີໂທຕິດຕໍ່ (020 ...)" 
+                            class="org-field-input w-full px-3 py-1.5 bg-white border border-slate-200 rounded-xl text-[11px] text-slate-700 focus:outline-none focus:ring-2 focus:ring-teal-600">
+                    </div>
+                </div>
+            `).join('');
+
+            const modal = document.getElementById('orgEditModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeOrgEditModal() {
+            const modal = document.getElementById('orgEditModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function openNewsView() {
+            document.getElementById('newsDeptSubtitle').textContent = `${getStore().deptName} ມວສ`;
+            renderNewsFeed();
+            switchView('newsView');
+        }
+
+        function renderNewsFeed() {
+            const container = document.getElementById('newsFeedContainer');
+            const currentNews = getStore().newsData;
+            container.innerHTML = currentNews.map(item => `
+                <article class="bg-white rounded-2xl p-4 shadow-xs border border-slate-200/80 space-y-2">
+                    <div class="flex items-center justify-between">
+                        <span class="text-[11px] font-bold text-teal-700 bg-teal-50 border border-teal-200 px-2.5 py-0.5 rounded-full">${item.category}</span>
+                        <span class="text-[11px] text-slate-400 flex items-center gap-1"><i class="ph ph-clock"></i> ${item.date}</span>
+                    </div>
+                    <h3 class="font-bold text-sm text-navy-900 leading-snug">${item.title}</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">${item.content}</p>
+                </article>
+            `).join('');
+        }
+
+        function openAddNewsModal() {
+            document.getElementById('newsModalSubtitle').textContent = getStore().deptName;
+            document.getElementById('addNewsForm').reset();
+            const modal = document.getElementById('addNewsModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeAddNewsModal() {
+            const modal = document.getElementById('addNewsModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        // =========================================================================
+        // MODAL 1: ແກ້ໄຂສະຖິຕິ + ເພີ່ມ / ແກ້ໄຂ / ລຶບ ສາຂາວິຊາ
+        // =========================================================================
+        const editModal = document.getElementById('editModal');
+        const modalFacultySelect = document.getElementById('modalFacultySelect');
+        const modalDegreeInputsContainer = document.getElementById('modalDegreeInputsContainer');
+
+        function openQuickEditModal(preselectFacultyId = null) {
+            if (!currentUser) return;
+            const store = getStore();
+            document.getElementById('editModalCategoryLabel').textContent = `${store.title} (${currentUser.label})`;
+            let faculties = store.appData[currentYear].faculties;
+
+            // ຖ້າເປັນ User ປະຈຳຄະນະ ໃຫ້ສະແດງສະເພາະຄະນະຂອງຕົນເອງໃນ Dropdown
+            if (currentUser.role === 'faculty') {
+                faculties = faculties.filter(f => f.id === currentUser.facultyId);
+            }
+
+            modalFacultySelect.innerHTML = faculties.map(f => 
+                `<option value="${f.id}">${f.shortName}</option>`
+            ).join('');
+
+            if (currentUser.role === 'faculty') {
+                modalFacultySelect.value = currentUser.facultyId;
+            } else if (preselectFacultyId) {
+                modalFacultySelect.value = preselectFacultyId;
+            } else if (activeFacultyId) {
+                modalFacultySelect.value = activeFacultyId;
+            }
+
+            // ສະແດງປຸ່ມ "ຄືນຄ່າເດີມ" ສະເພາະ Admin
+            const resetBtn = document.getElementById('resetDataBtn');
+            if (resetBtn) {
+                resetBtn.style.display = currentUser.role === 'admin' ? 'inline-block' : 'none';
+            }
+
+            loadFacultyDegreesIntoTemp();
+            renderModalDegreeInputs();
+            editModal.classList.remove('hidden');
+            editModal.classList.add('flex');
+        }
+
+        function closeEditModal() {
+            editModal.classList.add('hidden');
+            editModal.classList.remove('flex');
+        }
+
+        function loadFacultyDegreesIntoTemp() {
+            const faculty = getStore().appData[currentYear].faculties.find(f => f.id === modalFacultySelect.value);
+            modalTempDegrees = faculty ? JSON.parse(JSON.stringify(faculty.degrees)) : [];
+        }
+
+        function syncInputsToTemp() {
+            document.querySelectorAll('.modal-deg-item').forEach((row, idx) => {
+                if (!modalTempDegrees[idx]) return;
+                const levelInp = row.querySelector('.modal-level-input');
+                const progInp = row.querySelector('.modal-prog-input');
+                const fInp = row.querySelector('[data-gender="female"]');
+                const mInp = row.querySelector('[data-gender="male"]');
+                if (levelInp) modalTempDegrees[idx].level = levelInp.value.trim() || 'ປະລິນຍາຕີ';
+                if (progInp) modalTempDegrees[idx].program = progInp.value.trim() || 'ສາຂາໃໝ່';
+                if (fInp) modalTempDegrees[idx].female = Math.max(0, parseInt(fInp.value) || 0);
+                if (mInp) modalTempDegrees[idx].male = Math.max(0, parseInt(mInp.value) || 0);
+            });
+        }
+
+        function addNewProgramRow() {
+            syncInputsToTemp();
+            const defaultLevel = activeCategory === 'undergrad' ? 'ປະລິນຍາຕີ' : 'ປະລິນຍາໂທ';
+            modalTempDegrees.push({
+                level: defaultLevel,
+                program: 'ສາຂາ ',
+                female: 0,
+                male: 0
+            });
+            renderModalDegreeInputs();
+            setTimeout(() => {
+                modalDegreeInputsContainer.scrollTop = modalDegreeInputsContainer.scrollHeight;
+                const inputs = modalDegreeInputsContainer.querySelectorAll('.modal-prog-input');
+                if (inputs.length > 0) inputs[inputs.length - 1].focus();
+            }, 50);
+        }
+
+        function removeProgramRow(index) {
+            if (modalTempDegrees.length <= 1) {
+                showToast('ຕ້ອງມີຢ່າງໜ້ອຍ 1 ສາຂາໃນຄະນະ!', true);
+                return;
+            }
+            syncInputsToTemp();
+            modalTempDegrees.splice(index, 1);
+            renderModalDegreeInputs();
+        }
+
+        function renderModalDegreeInputs() {
+            const levelOptions = activeCategory === 'undergrad'
+                ? ['ອະນຸປະລິນຍາ', 'ປະລິນຍາຕີ', 'ຕໍ່ເນື່ອງປະລິນຍາຕີ']
+                : ['ແພດລົງເລີກຂະແໜງ', 'ແພດຊ່ຽວຊານ ຂັ້ນ 1', 'ແພດຊ່ຽວຊານ ຂັ້ນ 2', 'ປະລິນຍາໂທ', 'ປະລິນຍາເອກ'];
+
+            const rowsHTML = modalTempDegrees.map((d, index) => {
+                const optionsList = levelOptions.includes(d.level) ? levelOptions : [d.level, ...levelOptions];
+                return `
+                <div class="modal-deg-item bg-slate-50 p-3 rounded-xl border border-slate-200/90 space-y-2 relative">
+                    <div class="flex items-center justify-between gap-2">
+                        <div class="flex items-center gap-1.5 flex-1">
+                            <span class="text-xs font-extrabold text-teal-800">${index + 1}.</span>
+                            <select class="modal-level-input px-2 py-1 bg-teal-50 border border-teal-200 rounded-lg text-[11px] font-bold text-teal-800 focus:outline-none focus:ring-2 focus:ring-teal-500">
+                                ${optionsList.map(opt => `<option value="${opt}" ${opt === d.level ? 'selected' : ''}>${opt}</option>`).join('')}
+                            </select>
+                        </div>
+                        <button type="button" onclick="removeProgramRow(${index})" title="ລຶບສາຂານີ້" class="text-rose-500 hover:text-rose-700 hover:bg-rose-50 p-1 rounded-lg transition-colors cursor-pointer">
+                            <i class="ph-bold ph-trash text-sm"></i>
+                        </button>
+                    </div>
+
+                    <div>
+                        <input type="text" value="${d.program.replace(/"/g, '&quot;')}" placeholder="ຊື່ສາຂາວິຊາ (ເຊັ່ນ: ສາຂາ ແພດສາດ)" 
+                            class="modal-prog-input w-full px-2.5 py-1.5 bg-white border border-slate-200 rounded-lg text-xs font-bold text-navy-900 focus:outline-none focus:ring-2 focus:ring-teal-500">
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="block text-[10px] font-semibold text-rose-600 mb-0.5">ຍິງ</label>
+                            <input type="number" min="0" max="9999" data-deg-idx="${index}" data-gender="female" value="${d.female}" 
+                                class="modal-num-input w-full px-2.5 py-1.5 bg-white border border-slate-200 rounded-lg text-sm font-bold text-navy-900 focus:outline-none focus:ring-2 focus:ring-rose-400">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-semibold text-teal-700 mb-0.5">ຊາຍ</label>
+                            <input type="number" min="0" max="9999" data-deg-idx="${index}" data-gender="male" value="${d.male}" 
+                                class="modal-num-input w-full px-2.5 py-1.5 bg-white border border-slate-200 rounded-lg text-sm font-bold text-navy-900 focus:outline-none focus:ring-2 focus:ring-teal-500">
+                        </div>
+                    </div>
+                </div>
+            `}).join('');
+
+            const addBtnHTML = `
+                <button type="button" onclick="addNewProgramRow()" class="w-full py-2.5 px-3 rounded-xl border-2 border-dashed border-teal-400 bg-teal-50/50 hover:bg-teal-100/70 text-teal-800 font-bold text-xs flex items-center justify-center gap-1.5 transition-colors cursor-pointer">
+                    <i class="ph-bold ph-plus-circle text-base text-teal-600"></i>
+                    <span>+ ເພີ່ມສາຂາວິຊາໃໝ່</span>
+                </button>
+            `;
+
+            modalDegreeInputsContainer.innerHTML = rowsHTML + addBtnHTML;
+
+            document.querySelectorAll('.modal-num-input').forEach(inp => {
+                inp.addEventListener('input', updateModalTotalPreview);
+            });
+
+            updateModalTotalPreview();
+        }
+
+        function updateModalTotalPreview() {
+            let sum = 0;
+            document.querySelectorAll('.modal-num-input').forEach(inp => {
+                sum += Math.max(0, parseInt(inp.value) || 0);
+            });
+            document.getElementById('modalFacultyTotalPreview').textContent = `${formatNum(sum)} ຄົນ`;
+        }
+
+        function resetAllData() {
+            if (!currentUser || currentUser.role !== 'admin') {
+                showToast('ສະເພາະ Admin ເທົ່ານັ້ນທີ່ສາມາດຄືນຄ່າເດີມທັງໝົດໄດ້!', true);
+                return;
+            }
+            const store = getStore();
+            store.appData = JSON.parse(JSON.stringify(store.initialStats));
+            saveToStorage(store.statsKey, store.appData);
+            updateLastModifiedDate();
+            renderPortalView();
+            renderHomeView();
+            if (activeFacultyId) {
+                openFacultyDetail(activeFacultyId);
+            }
+            closeEditModal();
+            showToast('ຄືນຄ່າຂໍ້ມູນເລີ່ມຕົ້ນທັງໝົດແລ້ວ');
+        }
+
+        function showToast(msg, isError = false) {
+            const banner = document.getElementById('toastBanner');
+            const icon = banner.querySelector('i');
+            document.getElementById('toastMessage').textContent = msg;
+            if (isError) {
+                banner.className = "fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-rose-900/95 text-white px-4 py-2.5 rounded-full shadow-xl text-xs font-medium flex items-center gap-2 border border-rose-400/30 whitespace-nowrap";
+                icon.className = "ph-fill ph-warning-circle text-rose-300 text-base";
+            } else {
+                banner.className = "fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-navy-900/95 text-white px-4 py-2.5 rounded-full shadow-xl text-xs font-medium flex items-center gap-2 border border-white/10 whitespace-nowrap";
+                icon.className = "ph-fill ph-check-circle text-emerald-400 text-base";
+            }
+            banner.classList.remove('hidden');
+            setTimeout(() => banner.classList.add('hidden'), 3200);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedDate = localStorage.getItem(STORAGE_KEYS.LAST_UPDATED);
+            if (savedDate) {
+                document.getElementById('lastUpdatedTimestamp').textContent = savedDate;
+            }
+
+            updateAuthUI();
+            renderPortalView();
+
+            document.getElementById('academicYearSelect').addEventListener('change', (e) => {
+                currentYear = e.target.value;
+                renderPortalView();
+                renderHomeView();
+                if (activeFacultyId) {
+                    openFacultyDetail(activeFacultyId);
+                }
+                showToast(`ປ່ຽນເປັນ ${e.target.options[e.target.selectedIndex].text}`);
+            });
+
+            modalFacultySelect.addEventListener('change', () => {
+                loadFacultyDegreesIntoTemp();
+                renderModalDegreeInputs();
+            });
+
+            editModal.addEventListener('click', (e) => {
+                if (e.target === editModal) closeEditModal();
+            });
+            document.getElementById('orgEditModal').addEventListener('click', (e) => {
+                if (e.target.id === 'orgEditModal') closeOrgEditModal();
+            });
+            document.getElementById('addNewsModal').addEventListener('click', (e) => {
+                if (e.target.id === 'addNewsModal') closeAddNewsModal();
+            });
+            document.getElementById('loginModal').addEventListener('click', (e) => {
+                if (e.target.id === 'loginModal') closeLoginModal();
+            });
+
+            document.getElementById('loginForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const user = document.getElementById('loginUsername').value.trim().toLowerCase();
+                const pass = document.getElementById('loginPassword').value;
+                const account = USER_ACCOUNTS[user];
+
+                if (account && account.password === pass) {
+                    currentUser = { username: user, ...account };
+                    updateAuthUI();
+                    closeLoginModal();
+                    if (!document.getElementById('orgChartView').classList.contains('hidden')) {
+                        renderOrgChart();
+                    }
+                    showToast(`ຍິນດີຕ້ອນຮັບ: ${currentUser.label}`);
+
+                    if (typeof pendingAuthAction === 'function') {
+                        const action = pendingAuthAction;
+                        const reqFac = pendingRequiredFacultyId;
+                        pendingAuthAction = null;
+                        pendingRequiredFacultyId = null;
+
+                        if (currentUser.role === 'admin') {
+                            action();
+                        } else if (reqFac === 'admin') {
+                            showToast('ບັນຊີຂອງທ່ານບໍ່ມີສິດແກ້ໄຂສ່ວນນີ້ (ສະເພາະ Admin)', true);
+                        } else if (reqFac && currentUser.facultyId !== reqFac) {
+                            showToast(`ທ່ານມີສິດແກ້ໄຂສະເພາະ "${currentUser.label}" ເທົ່ານັ້ນ!`, true);
+                        } else {
+                            action();
+                        }
+                    }
+                } else {
+                    document.getElementById('loginErrorMsg').classList.remove('hidden');
+                }
+            });
+
+            document.getElementById('editFacultyForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+                if (!currentUser) return;
+                const targetFacId = modalFacultySelect.value;
+
+                if (currentUser.role === 'faculty' && currentUser.facultyId !== targetFacId) {
+                    showToast('ທ່ານບໍ່ມີສິດບັນທຶກຂໍ້ມູນຂອງຄະນະອື່ນ!', true);
+                    return;
+                }
+
+                syncInputsToTemp();
+                const store = getStore();
+                const faculty = store.appData[currentYear].faculties.find(f => f.id === targetFacId);
+                if (!faculty) return;
+
+                faculty.degrees = JSON.parse(JSON.stringify(modalTempDegrees));
+
+                saveToStorage(store.statsKey, store.appData);
+                if (typeof window.pushDataToCloudGlobal === 'function') window.pushDataToCloudGlobal();
+                updateLastModifiedDate();
+                renderPortalView();
+                renderHomeView();
+                if (activeFacultyId === faculty.id) {
+                    openFacultyDetail(faculty.id);
+                }
+                closeEditModal();
+                showToast(`ບັນທຶກຂໍ້ມູນ ${faculty.shortName} ສຳເລັດ!`);
+            });
+
+            document.getElementById('orgEditForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+                if (!currentUser || currentUser.role !== 'admin') return;
+                const store = getStore();
+                document.querySelectorAll('.org-field-input').forEach(inp => {
+                    const idx = parseInt(inp.dataset.orgIdx);
+                    const field = inp.dataset.field;
+                    store.orgData[idx][field] = inp.value.trim();
+                });
+
+                saveToStorage(store.orgKey, store.orgData);
+                if (typeof window.pushDataToCloudGlobal === 'function') window.pushDataToCloudGlobal();
+                updateLastModifiedDate();
+                renderOrgChart();
+                closeOrgEditModal();
+                showToast('ບັນທຶກລາຍຊື່ໂຄງຮ່າງການຈັດຕັ້ງສຳເລັດ!');
+            });
+
+            document.getElementById('addNewsForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+                if (!currentUser || currentUser.role !== 'admin') return;
+                const store = getStore();
+                const category = document.getElementById('newsCategoryInput').value;
+                const title = document.getElementById('newsTitleInput').value.trim();
+                const content = document.getElementById('newsContentInput').value.trim();
+
+                if (!title || !content) return;
+
+                store.newsData.unshift({
+                    id: Date.now(),
+                    category,
+                    date: getCurrentLaoDate(),
+                    title,
+                    content
+                });
+
+                saveToStorage(store.newsKey, store.newsData);
+                if (typeof window.pushDataToCloudGlobal === 'function') window.pushDataToCloudGlobal();
+                updateLastModifiedDate();
+                renderNewsFeed();
+                renderHomeView();
+                closeAddNewsModal();
+                showToast('ເພີ່ມຂ່າວສານໃໝ່ສຳເລັດ!');
+            });
+        });
+    </script>
+
+    <!-- =====================================================================
+         FIREBASE REAL-TIME CLOUD SYNC MODULE (ສຳລັບ GitHub Pages)
+         ===================================================================== -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // ---------------------------------------------------------------------
+        // ວາງຄ່າ Firebase Config ຂອງເຈົ້າໃສ່ບ່ອນນີ້ ເພື່ອເປີດໃຊ້ງານ Real-time Cloud ທົ່ວປະເທດ
+        // ---------------------------------------------------------------------
+        const YOUR_GITHUB_FIREBASE_CONFIG = {
+            apiKey: "PASTE_YOUR_API_KEY",
+            authDomain: "PASTE_YOUR_PROJECT_ID.firebaseapp.com",
+            projectId: "PASTE_YOUR_PROJECT_ID",
+            storageBucket: "PASTE_YOUR_PROJECT_ID.appspot.com",
+            messagingSenderId: "PASTE_YOUR_SENDER_ID",
+            appId: "PASTE_YOUR_APP_ID"
+        };
+
+        let db = null;
+        let docRef = null;
+        let isCloudReady = false;
+
+        async function initCloudSync() {
+            let configToUse = null;
+            let docPath = ['uhs_public_data', 'main_database'];
+
+            if (typeof __firebase_config !== 'undefined' && __firebase_config) {
+                configToUse = JSON.parse(__firebase_config);
+                const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+                docPath = ['artifacts', appId, 'public', 'data', 'uhs_stats', 'main_database'];
+            } else if (YOUR_GITHUB_FIREBASE_CONFIG.apiKey !== "PASTE_YOUR_API_KEY") {
+                configToUse = YOUR_GITHUB_FIREBASE_CONFIG;
+            }
+
+            if (!configToUse) {
+                console.info("ກຳລັງເຮັດວຽກໃນໂໝດ Local Storage (ຍັງບໍ່ໄດ້ໃສ່ Firebase Config)");
+                return;
+            }
+
+            try {
+                const app = initializeApp(configToUse);
+                const auth = getAuth(app);
+                db = getFirestore(app);
+
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    await signInWithCustomToken(auth, __initial_auth_token);
+                } else {
+                    await signInAnonymously(auth);
+                }
+
+                docRef = doc(db, ...docPath);
+                isCloudReady = true;
+
+                // ຟັງການປ່ຽນແປງຂໍ້ມູນແບບ Real-time ພ້ອມ Error Handler ປ້ອງກັນ Permission Denied
+                onSnapshot(docRef, (snapshot) => {
+                    if (snapshot.exists()) {
+                        const cloudData = snapshot.data();
+                        if (cloudData.postgrad) {
+                            stateByCategory.postgrad.appData = cloudData.postgrad.appData || stateByCategory.postgrad.appData;
+                            stateByCategory.postgrad.orgData = cloudData.postgrad.orgData || stateByCategory.postgrad.orgData;
+                            stateByCategory.postgrad.newsData = cloudData.postgrad.newsData || stateByCategory.postgrad.newsData;
+                        }
+                        if (cloudData.undergrad) {
+                            stateByCategory.undergrad.appData = cloudData.undergrad.appData || stateByCategory.undergrad.appData;
+                            stateByCategory.undergrad.orgData = cloudData.undergrad.orgData || stateByCategory.undergrad.orgData;
+                            stateByCategory.undergrad.newsData = cloudData.undergrad.newsData || stateByCategory.undergrad.newsData;
+                        }
+                        if (cloudData.lastUpdated) {
+                            const tsEl = document.getElementById('lastUpdatedTimestamp');
+                            if (tsEl) tsEl.textContent = cloudData.lastUpdated;
+                        }
+
+                        // ອັບເດດໜ້າຈໍທັນທີ
+                        renderPortalView();
+                        if (!document.getElementById('homeView').classList.contains('hidden')) renderHomeView();
+                        if (!document.getElementById('facultyDetailView').classList.contains('hidden') && activeFacultyId) openFacultyDetail(activeFacultyId);
+                        if (!document.getElementById('orgChartView').classList.contains('hidden')) renderOrgChart();
+                        if (!document.getElementById('newsView').classList.contains('hidden')) renderNewsFeed();
+                    } else {
+                        pushDataToCloud();
+                    }
+                }, (error) => {
+                    // ຈັບ Error ເມື່ອ Firestore Rules ຍັງບໍ່ທັນໄດ້ເປີດສິດ ແລ້ວສະຫຼັບໄປໃຊ້ Local Storage ອັດຕະໂນມັດ
+                    isCloudReady = false;
+                    console.info("Firestore sync bypassed (using local storage):", error.code);
+                });
+            } catch (err) {
+                isCloudReady = false;
+                console.info("Cloud Sync bypassed:", err.message);
+            }
+        }
+
+        async function pushDataToCloud() {
+            if (!isCloudReady || !docRef) return;
+            try {
+                await setDoc(docRef, {
+                    postgrad: {
+                        appData: stateByCategory.postgrad.appData,
+                        orgData: stateByCategory.postgrad.orgData,
+                        newsData: stateByCategory.postgrad.newsData
+                    },
+                    undergrad: {
+                        appData: stateByCategory.undergrad.appData,
+                        orgData: stateByCategory.undergrad.orgData,
+                        newsData: stateByCategory.undergrad.newsData
+                    },
+                    lastUpdated: getCurrentLaoDate()
+                });
+            } catch (err) {
+                console.info("Cloud push skipped (saved locally):", err.code);
+            }
+        }
+
+        window.pushDataToCloudGlobal = pushDataToCloud;
+
+        window.addEventListener('load', () => {
+            initCloudSync();
+        });
+    </script>
+</body>
+</html>
