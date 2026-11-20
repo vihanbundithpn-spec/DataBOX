@@ -3,6 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- ປ້ອງກັນ Browser Cache ໜ້າເວັບເກົ່າ -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>ສະຖິຕິນັກສຶກສາ ມວສຊ - ມະຫາວິທະຍາໄລວິທະຍາສາດສຸຂະພາບແຫ່ງຊາດ</title>
     
     <!-- SEO & Social Share Meta Tags -->
@@ -90,16 +94,25 @@
                 </div>
             </div>
 
-            <!-- Admin Security Status Bar (View-Only vs Logged-in Mode) -->
-            <div class="bg-navy-950/60 px-4 py-1.5 flex items-center justify-between text-[11px] border-t border-white/10">
-                <div id="authStatusBadge" class="flex items-center gap-1.5 text-slate-300">
+            <!-- Admin Security Status Bar + Cloud Sync Status -->
+            <div class="bg-navy-950/70 px-4 py-1.5 flex items-center justify-between text-[11px] border-t border-white/10 gap-2">
+                <div id="authStatusBadge" class="flex items-center gap-1.5 text-slate-300 truncate">
                     <i class="ph-fill ph-lock-key text-amber-400"></i>
-                    <span>ສະຖານະ: <strong>ເບິ່ງຂໍ້ມູນເທົ່ານັ້ນ (View Only)</strong></span>
+                    <span>ສະຖານະ: <strong>ເບິ່ງຂໍ້ມູນເທົ່ານັ້ນ</strong></span>
                 </div>
-                <button id="authHeaderActionBtn" onclick="handleAuthHeaderAction()" class="font-bold text-emerald-300 hover:text-emerald-200 flex items-center gap-1 cursor-pointer transition-colors">
-                    <i class="ph-bold ph-sign-in"></i>
-                    <span>ເຂົ້າສູ່ລະບົບ</span>
-                </button>
+
+                <div class="flex items-center gap-2.5 shrink-0">
+                    <!-- Cloud Sync Indicator -->
+                    <span id="cloudSyncBadge" title="ສະຖານະການເຊື່ອມຕໍ່ຖານຂໍ້ມູນ Cloud" class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/20 text-amber-300 border border-amber-400/30">
+                        <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+                        <span>Local</span>
+                    </span>
+
+                    <button id="authHeaderActionBtn" onclick="handleAuthHeaderAction()" class="font-bold text-emerald-300 hover:text-emerald-200 flex items-center gap-1 cursor-pointer transition-colors">
+                        <i class="ph-bold ph-sign-in"></i>
+                        <span>ເຂົ້າສູ່ລະບົບ</span>
+                    </button>
+                </div>
             </div>
         </header>
 
@@ -502,7 +515,7 @@
                 </div>
 
                 <div>
-                    <span class="inline-block text-xs font-bold text-teal-700 bg-teal-50 border border-teal-200 px-3 py-1 rounded-full">Version 2.3.1 (Dentistry 6-Year Edition)</span>
+                    <span class="inline-block text-xs font-bold text-teal-700 bg-teal-50 border border-teal-200 px-3 py-1 rounded-full">Version 2.4.0 (Cloud Sync Edition)</span>
                     <h2 class="text-lg font-bold text-navy-900 mt-2">ລະບົບລາຍງານສະຖິຕິນັກສຶກສາ ມວສຊ</h2>
                     <p class="text-xs text-slate-500 mt-1">ມະຫາວິທະຍາໄລວິທະຍາສາດສຸຂະພາບແຫ່ງຊາດ (ມວສຊ)</p>
                 </div>
@@ -510,29 +523,20 @@
                 <div class="bg-slate-50 rounded-2xl p-4 text-left space-y-2.5 border border-slate-100 text-xs">
                     <div class="flex justify-between py-1 border-b border-slate-200/70">
                         <span class="text-slate-500">ເວີຊັນລະບົບ (App Version):</span>
-                        <span class="font-bold text-navy-900">v2.3.1-dent-6y</span>
+                        <span class="font-bold text-navy-900">v2.4.0-cloud</span>
+                    </div>
+                    <div class="flex justify-between py-1 border-b border-slate-200/70">
+                        <span class="text-slate-500">ສະຖານະຖານຂໍ້ມູນ:</span>
+                        <span id="versionCloudStatusText" class="font-bold text-amber-600">Local Storage</span>
                     </div>
                     <div class="flex justify-between py-1 border-b border-slate-200/70">
                         <span class="text-slate-500">ອັບເດດຂໍ້ມູນລ່າສຸດ:</span>
                         <span id="lastUpdatedTimestamp" class="font-semibold text-teal-700">19 ພະຈິກ 2026</span>
                     </div>
-                    <div class="flex justify-between py-1 border-b border-slate-200/70">
-                        <span class="text-slate-500">ຂອບເຂດຂໍ້ມູນ:</span>
-                        <span class="font-semibold text-navy-900">ແຍກຄະນະ • ສາຂາ • ປີຮຽນ</span>
-                    </div>
                     <div class="flex justify-between py-1">
                         <span class="text-slate-500">ພັດທະນາໂດຍ:</span>
                         <span class="font-semibold text-navy-900">ທ່ານ ອາຈານ ວິຫານບັນດິດ ໄພສຸພັນ</span>
                     </div>
-                </div>
-
-                <div class="text-left space-y-1.5">
-                    <h4 class="text-xs font-bold text-navy-900">ບັນທຶກການພັດທະນາ (Release Notes):</h4>
-                    <ul class="text-xs text-slate-600 space-y-1 list-disc list-inside">
-                        <li>ກຳນົດຫຼັກສູດປະລິນຍາຕີ ສາຂາ ທັນຕະແພດສາດ ເປັນ 6 ປີ ແຍກຈາກປະລິນຍາຕີອື່ນໆ (5 ປີ)</li>
-                        <li>ແຍກສະຖິຕິນັກສຶກສາໃນແຕ່ລະສາຂາອອກເປັນແຕ່ລະປີຮຽນ ແລະ ປ່ຽນປີຮຽນພາຍຫຼັງໄດ້</li>
-                        <li>Admin ສາມາດກຳນົດຈຳນວນປີຮຽນຂອງແຕ່ລະຫຼັກສູດ ແລະ ສາຂາພິເສດໄດ້ເອງ</li>
-                    </ul>
                 </div>
             </div>
         </section>
@@ -540,7 +544,7 @@
     </div>
 
     <!-- =====================================================================
-         MODAL 1: LIVE DATA EDIT MODAL (ແກ້ໄຂໂຕເລກຕາມປີຮຽນ + ເພີ່ມ/ແກ້ໄຂ/ລຶບ ສາຂາ)
+         MODAL 1: LIVE DATA EDIT MODAL
          ===================================================================== -->
     <div id="editModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-navy-950/65 backdrop-blur-xs">
         <div class="bg-white rounded-3xl w-full max-w-md shadow-2xl border border-slate-100 overflow-hidden">
@@ -559,7 +563,7 @@
                 </button>
             </div>
 
-            <!-- ກ່ອງກຳນົດຈຳນວນປີຮຽນຕາມຫຼັກສູດ ແລະ ສາຂາພິເສດ (ສະເພາະ Admin ເທົ່ານັ້ນ) -->
+            <!-- ກ່ອງກຳນົດຈຳນວນປີຮຽນຕາມຫຼັກສູດ (ສະເພາະ Admin) -->
             <div id="adminProgramYearConfigBox" class="hidden bg-amber-50/90 border-b border-amber-200 px-5 py-3 space-y-2">
                 <div class="flex items-center justify-between">
                     <span class="text-[11px] font-extrabold text-amber-900 flex items-center gap-1">
@@ -611,7 +615,7 @@
     </div>
 
     <!-- =====================================================================
-         MODAL 1B: SHIFT / CHANGE STUDY YEAR IN FACULTY (ປ່ຽນ / ເລື່ອນປີຮຽນພາຍຫຼັງ)
+         MODAL 1B: SHIFT / CHANGE STUDY YEAR IN FACULTY
          ===================================================================== -->
     <div id="shiftYearModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-navy-950/65 backdrop-blur-xs">
         <div class="bg-white rounded-3xl w-full max-w-md shadow-2xl border border-slate-100 overflow-hidden">
@@ -825,11 +829,6 @@
             PROGRAM_YEAR_LIMITS: 'uhs_program_year_limits_v2_dent6y'
         };
 
-        /**
-         * ກຳນົດຈຳນວນປີຮຽນຂອງແຕ່ລະຫຼັກສູດ ແລະ ກໍລະນີພິເສດສະເພາະສາຂາ:
-         * - ຫຼັກສູດປະລິນຍາຕີ ປົກກະຕິ: 5 ປີ
-         * - ຫຼັກສູດປະລິນຍາຕີ ສາຂາ ທັນຕະແພດສາດ: 6 ປີ
-         */
         const DEFAULT_PROGRAM_YEAR_LIMITS = {
             "ອະນຸປະລິນຍາ": 2,
             "ປະລິນຍາຕີ": 5,
@@ -922,9 +921,6 @@
             return `ປີທີ ${safeYear} / ${maxY} ປີ`;
         }
 
-        /**
-         * ແປງຂໍ້ມູນສາຂາໃຫ້ມີໂຄງສ້າງແຍກປີຮຽນ (studyYears: [{ year, female, male }])
-         */
         function normalizeDegreeEntry(deg) {
             const maxY = getMaxStudyYears(deg.level, deg.program);
             if (Array.isArray(deg.studyYears) && deg.studyYears.length > 0) {
@@ -994,9 +990,6 @@
             if (tsEl) tsEl.textContent = todayStr;
         }
 
-        /**
-         * 1. DATASET FOR POSTGRADUATE (ຫຼັກສູດ ຫຼັງປະລິນຍາຕີ)
-         */
         const initialPostgradDatabase = {
             "2025-2026": {
                 faculties: [
@@ -1214,9 +1207,6 @@
             }
         };
 
-        /**
-         * 2. DATASET FOR UNDERGRADUATE & ASSOCIATE DEGREE (ຫຼັກສູດ ອະນຸປະລິນຍາ ແລະ ປະລິນຍາຕີ)
-         */
         const initialUndergradDatabase = {
             "2025-2026": {
                 faculties: [
@@ -1426,6 +1416,9 @@
             try {
                 const raw = localStorage.getItem(key);
                 const parsed = raw ? JSON.parse(raw) : JSON.parse(JSON.stringify(fallback));
+                if (Array.isArray(fallback)) {
+                    return Array.isArray(parsed) ? parsed : JSON.parse(JSON.stringify(fallback));
+                }
                 Object.keys(fallback).forEach(yr => {
                     if (!parsed[yr]) {
                         parsed[yr] = JSON.parse(JSON.stringify(fallback[yr]));
@@ -1433,7 +1426,9 @@
                 });
                 return normalizeDatabaseStudyYears(parsed);
             } catch (e) {
-                return normalizeDatabaseStudyYears(JSON.parse(JSON.stringify(fallback)));
+                return Array.isArray(fallback)
+                    ? JSON.parse(JSON.stringify(fallback))
+                    : normalizeDatabaseStudyYears(JSON.parse(JSON.stringify(fallback)));
             }
         }
 
@@ -1525,6 +1520,37 @@
         let modalTempDegrees = [];
         let shiftTempDegrees = [];
 
+        function updateCloudStatusUI(status, detailText = '') {
+            const badge = document.getElementById('cloudSyncBadge');
+            const versionText = document.getElementById('versionCloudStatusText');
+            if (!badge) return;
+
+            if (status === 'connected') {
+                badge.className = "inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-400/30";
+                badge.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span><span>Cloud Online</span>`;
+                badge.title = "ເຊື່ອມຕໍ່ Firebase Cloud ສຳເລັດ (ຂໍ້ມູນອັບເດດໃຫ້ທຸກຄົນເຫັນ)";
+                if (versionText) {
+                    versionText.textContent = "Cloud Real-time Connected";
+                    versionText.className = "font-bold text-emerald-600";
+                }
+            } else if (status === 'syncing') {
+                badge.className = "inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-sky-500/20 text-sky-300 border border-sky-400/30";
+                badge.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-sky-400 animate-ping"></span><span>Syncing...</span>`;
+            } else if (status === 'error') {
+                badge.className = "inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-500/20 text-rose-300 border border-rose-400/30";
+                badge.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-rose-400"></span><span>Sync Error</span>`;
+                badge.title = detailText || "ເກີດຂໍ້ຜິດພາດໃນການເຊື່ອມຕໍ່ Firebase";
+                if (versionText) {
+                    versionText.textContent = detailText || "Firebase Sync Error";
+                    versionText.className = "font-bold text-rose-600";
+                }
+            } else {
+                badge.className = "inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/20 text-amber-300 border border-amber-400/30";
+                badge.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span><span>Local Only</span>`;
+                badge.title = "ຍັງບໍ່ໄດ້ຕັ້ງຄ່າ Firebase Config (ຂໍ້ມູນຢູ່ສະເພາະເຄື່ອງນີ້)";
+            }
+        }
+
         function togglePasswordVisibility() {
             const passInput = document.getElementById('loginPassword');
             const eyeIcon = document.getElementById('togglePasswordIcon');
@@ -1604,11 +1630,11 @@
             if (currentUser) {
                 badge.innerHTML = `
                     <i class="ph-fill ph-lock-simple-open text-emerald-400"></i>
-                    <span class="text-emerald-200 truncate max-w-[210px]">ສິດ: <strong>${currentUser.label}</strong></span>
+                    <span class="text-emerald-200 truncate max-w-[140px]"><strong>${currentUser.label}</strong></span>
                 `;
                 headerBtn.innerHTML = `
                     <i class="ph-bold ph-sign-out text-rose-300"></i>
-                    <span class="text-rose-300 hover:text-rose-200">ອອກຈາກລະບົບ</span>
+                    <span class="text-rose-300 hover:text-rose-200">ອອກ</span>
                 `;
                 lockIcons.forEach(icon => {
                     icon.className = 'ph-bold ph-pencil-simple-line lock-indicator text-emerald-300';
@@ -1616,7 +1642,7 @@
             } else {
                 badge.innerHTML = `
                     <i class="ph-fill ph-lock-key text-amber-400"></i>
-                    <span>ສະຖານະ: <strong>ເບິ່ງຂໍ້ມູນເທົ່ານັ້ນ (View Only)</strong></span>
+                    <span>ສະຖານະ: <strong>ເບິ່ງຂໍ້ມູນ</strong></span>
                 `;
                 headerBtn.innerHTML = `
                     <i class="ph-bold ph-sign-in"></i>
@@ -1658,7 +1684,8 @@
             let totalFemale = 0;
             let totalMale = 0;
             let totalPrograms = 0;
-            const faculties = stateByCategory[catKey].appData[currentYear].faculties;
+            const yearObj = stateByCategory[catKey].appData[currentYear];
+            const faculties = yearObj ? yearObj.faculties : [];
             faculties.forEach(f => {
                 const stats = getFacultyTotals(f);
                 totalFemale += stats.female;
@@ -1801,7 +1828,7 @@
                     </div>
                     <span class="text-[11px] sm:text-xs font-bold text-navy-900 leading-tight mt-2">Version ລະບົບ</span>
                     <span class="mt-1.5 inline-block text-[10px] font-bold text-slate-600 bg-slate-100 border border-slate-200 px-2 py-0.5 rounded-full">
-                        v2.3.1
+                        v2.4.0
                     </span>
                 </button>
             `;
@@ -1973,9 +2000,6 @@
             switchView('facultyDetailView');
         }
 
-        // =========================================================================
-        // MODAL 1B: ປ່ຽນ / ເລື່ອນປີຮຽນຂອງແຕ່ລະສາຂາພາຍຫຼັງ
-        // =========================================================================
         function openShiftYearModal(facultyId) {
             const store = getStore();
             const faculty = store.appData[currentYear].faculties.find(f => f.id === facultyId);
@@ -2223,9 +2247,6 @@
             modal.classList.remove('flex');
         }
 
-        // =========================================================================
-        // MODAL 1: ແກ້ໄຂສະຖິຕິແຍກປີຮຽນ + ເພີ່ມ / ແກ້ໄຂ / ລຶບ ສາຂາວິຊາ
-        // =========================================================================
         const editModal = document.getElementById('editModal');
         const modalFacultySelect = document.getElementById('modalFacultySelect');
         const modalDegreeInputsContainer = document.getElementById('modalDegreeInputsContainer');
@@ -2473,6 +2494,7 @@
             const store = getStore();
             store.appData = normalizeDatabaseStudyYears(JSON.parse(JSON.stringify(store.initialStats)));
             saveToStorage(store.statsKey, store.appData);
+            if (typeof window.pushDataToCloudGlobal === 'function') window.pushDataToCloudGlobal();
             updateLastModifiedDate();
             renderPortalView();
             renderHomeView();
@@ -2574,7 +2596,7 @@
                 }
             });
 
-            document.getElementById('editFacultyForm').addEventListener('submit', (e) => {
+            document.getElementById('editFacultyForm').addEventListener('submit', async (e) => {
                 e.preventDefault();
                 if (!currentUser) return;
                 const targetFacId = modalFacultySelect.value;
@@ -2592,7 +2614,6 @@
                 faculty.degrees = JSON.parse(JSON.stringify(modalTempDegrees.map(normalizeDegreeEntry)));
 
                 saveToStorage(store.statsKey, store.appData);
-                if (typeof window.pushDataToCloudGlobal === 'function') window.pushDataToCloudGlobal();
                 updateLastModifiedDate();
                 renderPortalView();
                 renderHomeView();
@@ -2600,10 +2621,15 @@
                     openFacultyDetail(faculty.id, false);
                 }
                 closeEditModal();
-                showToast(`ບັນທຶກຂໍ້ມູນ ${faculty.shortName} ສຳເລັດ!`);
+
+                if (typeof window.pushDataToCloudGlobal === 'function') {
+                    await window.pushDataToCloudGlobal();
+                } else {
+                    showToast(`ບັນທຶກຂໍ້ມູນ ${faculty.shortName} ສຳເລັດ (Local)!`);
+                }
             });
 
-            document.getElementById('shiftYearForm').addEventListener('submit', (e) => {
+            document.getElementById('shiftYearForm').addEventListener('submit', async (e) => {
                 e.preventDefault();
                 if (!currentUser || !activeFacultyId) return;
                 if (currentUser.role === 'faculty' && currentUser.facultyId !== activeFacultyId) {
@@ -2617,16 +2643,20 @@
 
                 faculty.degrees = JSON.parse(JSON.stringify(shiftTempDegrees.map(normalizeDegreeEntry)));
                 saveToStorage(store.statsKey, store.appData);
-                if (typeof window.pushDataToCloudGlobal === 'function') window.pushDataToCloudGlobal();
                 updateLastModifiedDate();
                 renderPortalView();
                 renderHomeView();
                 openFacultyDetail(faculty.id, false);
                 closeShiftYearModal();
-                showToast(`ບັນທຶກການປ່ຽນປີຮຽນຂອງ ${faculty.shortName} ສຳເລັດ!`);
+
+                if (typeof window.pushDataToCloudGlobal === 'function') {
+                    await window.pushDataToCloudGlobal();
+                } else {
+                    showToast(`ບັນທຶກການປ່ຽນປີຮຽນຂອງ ${faculty.shortName} ສຳເລັດ!`);
+                }
             });
 
-            document.getElementById('orgEditForm').addEventListener('submit', (e) => {
+            document.getElementById('orgEditForm').addEventListener('submit', async (e) => {
                 e.preventDefault();
                 if (!currentUser || currentUser.role !== 'admin') return;
                 const store = getStore();
@@ -2637,14 +2667,18 @@
                 });
 
                 saveToStorage(store.orgKey, store.orgData);
-                if (typeof window.pushDataToCloudGlobal === 'function') window.pushDataToCloudGlobal();
                 updateLastModifiedDate();
                 renderOrgChart();
                 closeOrgEditModal();
-                showToast('ບັນທຶກລາຍຊື່ໂຄງຮ່າງການຈັດຕັ້ງສຳເລັດ!');
+
+                if (typeof window.pushDataToCloudGlobal === 'function') {
+                    await window.pushDataToCloudGlobal();
+                } else {
+                    showToast('ບັນທຶກລາຍຊື່ໂຄງຮ່າງການຈັດຕັ້ງສຳເລັດ!');
+                }
             });
 
-            document.getElementById('addNewsForm').addEventListener('submit', (e) => {
+            document.getElementById('addNewsForm').addEventListener('submit', async (e) => {
                 e.preventDefault();
                 if (!currentUser || currentUser.role !== 'admin') return;
                 const store = getStore();
@@ -2663,12 +2697,16 @@
                 });
 
                 saveToStorage(store.newsKey, store.newsData);
-                if (typeof window.pushDataToCloudGlobal === 'function') window.pushDataToCloudGlobal();
                 updateLastModifiedDate();
                 renderNewsFeed();
                 renderHomeView();
                 closeAddNewsModal();
-                showToast('ເພີ່ມຂ່າວສານໃໝ່ສຳເລັດ!');
+
+                if (typeof window.pushDataToCloudGlobal === 'function') {
+                    await window.pushDataToCloudGlobal();
+                } else {
+                    showToast('ເພີ່ມຂ່າວສານໃໝ່ສຳເລັດ!');
+                }
             });
         });
     </script>
@@ -2681,13 +2719,16 @@
         import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
+        // =========================================================================
+        // ຕັ້ງຄ່າ Firebase Config ຂອງ Project "databox-190f8" ຮຽບຮ້ອຍແລ້ວ
+        // =========================================================================
         const YOUR_GITHUB_FIREBASE_CONFIG = {
-            apiKey: "PASTE_YOUR_API_KEY",
-            authDomain: "PASTE_YOUR_PROJECT_ID.firebaseapp.com",
-            projectId: "PASTE_YOUR_PROJECT_ID",
-            storageBucket: "PASTE_YOUR_PROJECT_ID.appspot.com",
-            messagingSenderId: "PASTE_YOUR_SENDER_ID",
-            appId: "PASTE_YOUR_APP_ID"
+            apiKey: "AIzaSyBivBI2haH7PaIzbbRp5u0xtT73R7AsXho",
+            authDomain: "databox-190f8.firebaseapp.com",
+            projectId: "databox-190f8",
+            storageBucket: "databox-190f8.firebasestorage.app",
+            messagingSenderId: "950008480387",
+            appId: "1:950008480387:web:7b400e3284cd3865a411b6"
         };
 
         let db = null;
@@ -2702,16 +2743,21 @@
                 configToUse = JSON.parse(__firebase_config);
                 const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
                 docPath = ['artifacts', appId, 'public', 'data', 'uhs_stats', 'main_database'];
-            } else if (YOUR_GITHUB_FIREBASE_CONFIG.apiKey !== "PASTE_YOUR_API_KEY") {
+            } else if (
+                YOUR_GITHUB_FIREBASE_CONFIG.apiKey &&
+                !YOUR_GITHUB_FIREBASE_CONFIG.apiKey.includes("PASTE_YOUR")
+            ) {
                 configToUse = YOUR_GITHUB_FIREBASE_CONFIG;
             }
 
             if (!configToUse) {
-                console.info("ກຳລັງເຮັດວຽກໃນໂໝດ Local Storage (ຍັງບໍ່ໄດ້ໃສ່ Firebase Config)");
+                updateCloudStatusUI('local');
+                console.warn("⚠️ ຍັງບໍ່ໄດ້ໃສ່ Firebase Config! ຂໍ້ມູນຈະບັນທຶກສະເພາະໃນເຄື່ອງນີ້ເທົ່ານັ້ນ.");
                 return;
             }
 
             try {
+                updateCloudStatusUI('syncing');
                 const app = initializeApp(configToUse);
                 const auth = getAuth(app);
                 db = getFirestore(app);
@@ -2725,18 +2771,26 @@
                 docRef = doc(db, ...docPath);
                 isCloudReady = true;
 
+                // ຟັງການປ່ຽນແປງຂໍ້ມູນຈາກ Cloud ແບບ Real-time (ທຸກຄົນຈະເຫັນຂໍ້ມູນຫຼ້າສຸດທັນທີ)
                 onSnapshot(docRef, (snapshot) => {
+                    updateCloudStatusUI('connected');
                     if (snapshot.exists()) {
                         const cloudData = snapshot.data();
                         if (cloudData.postgrad) {
                             stateByCategory.postgrad.appData = normalizeDatabaseStudyYears(cloudData.postgrad.appData || stateByCategory.postgrad.appData);
                             stateByCategory.postgrad.orgData = cloudData.postgrad.orgData || stateByCategory.postgrad.orgData;
                             stateByCategory.postgrad.newsData = cloudData.postgrad.newsData || stateByCategory.postgrad.newsData;
+                            saveToStorage(STORAGE_KEYS.POSTGRAD_STATS, stateByCategory.postgrad.appData);
+                            saveToStorage(STORAGE_KEYS.POSTGRAD_ORG, stateByCategory.postgrad.orgData);
+                            saveToStorage(STORAGE_KEYS.POSTGRAD_NEWS, stateByCategory.postgrad.newsData);
                         }
                         if (cloudData.undergrad) {
                             stateByCategory.undergrad.appData = normalizeDatabaseStudyYears(cloudData.undergrad.appData || stateByCategory.undergrad.appData);
                             stateByCategory.undergrad.orgData = cloudData.undergrad.orgData || stateByCategory.undergrad.orgData;
                             stateByCategory.undergrad.newsData = cloudData.undergrad.newsData || stateByCategory.undergrad.newsData;
+                            saveToStorage(STORAGE_KEYS.UNDERGRAD_STATS, stateByCategory.undergrad.appData);
+                            saveToStorage(STORAGE_KEYS.UNDERGRAD_ORG, stateByCategory.undergrad.orgData);
+                            saveToStorage(STORAGE_KEYS.UNDERGRAD_NEWS, stateByCategory.undergrad.newsData);
                         }
                         if (cloudData.programYearLimits) {
                             Object.keys(cloudData.programYearLimits).forEach(key => {
@@ -2748,31 +2802,44 @@
                             saveToStorage(STORAGE_KEYS.PROGRAM_YEAR_LIMITS, PROGRAM_YEAR_LIMITS);
                         }
                         if (cloudData.lastUpdated) {
+                            saveToStorage(STORAGE_KEYS.LAST_UPDATED, cloudData.lastUpdated);
                             const tsEl = document.getElementById('lastUpdatedTimestamp');
                             if (tsEl) tsEl.textContent = cloudData.lastUpdated;
                         }
 
+                        // ອັບເດດໜ້າຈໍໃຫ້ທຸກຄົນເຫັນຂໍ້ມູນໃໝ່ທັນທີ
                         renderPortalView();
                         if (!document.getElementById('homeView').classList.contains('hidden')) renderHomeView();
                         if (!document.getElementById('facultyDetailView').classList.contains('hidden') && activeFacultyId) openFacultyDetail(activeFacultyId, false);
                         if (!document.getElementById('orgChartView').classList.contains('hidden')) renderOrgChart();
                         if (!document.getElementById('newsView').classList.contains('hidden')) renderNewsFeed();
                     } else {
-                        pushDataToCloud();
+                        // ຖ້າ Cloud ຍັງວ່າງເປົ່າ (ເປີດຄັ້ງທຳອິດ) ໃຫ້ສົ່ງຂໍ້ມູນເລີ່ມຕົ້ນຂຶ້ນໄປເກັບໄວ້
+                        pushDataToCloud(true);
                     }
                 }, (error) => {
                     isCloudReady = false;
-                    console.info("Firestore sync bypassed (using local storage):", error.code);
+                    updateCloudStatusUI('error', `Firestore Error: ${error.code}`);
+                    console.error("Firestore read error:", error);
+                    showToast(`ບໍ່ສາມາດດຶງຂໍ້ມູນ Cloud ໄດ້ (${error.code})`, true);
                 });
             } catch (err) {
                 isCloudReady = false;
-                console.info("Cloud Sync bypassed:", err.message);
+                updateCloudStatusUI('error', err.message);
+                console.error("Cloud Init Error:", err);
+                showToast(`ເຊື່ອມຕໍ່ Firebase ບໍ່ສຳເລັດ: ${err.code || err.message}`, true);
             }
         }
 
-        async function pushDataToCloud() {
-            if (!isCloudReady || !docRef) return;
+        async function pushDataToCloud(silent = false) {
+            if (!isCloudReady || !docRef) {
+                if (!silent) {
+                    showToast('ບັນທຶກສະເພາະໃນເຄື່ອງ (ຍັງບໍ່ໄດ້ຕັ້ງຄ່າ Firebase Cloud)', true);
+                }
+                return;
+            }
             try {
+                updateCloudStatusUI('syncing');
                 await setDoc(docRef, {
                     postgrad: {
                         appData: stateByCategory.postgrad.appData,
@@ -2787,16 +2854,21 @@
                     programYearLimits: PROGRAM_YEAR_LIMITS,
                     lastUpdated: getCurrentLaoDate()
                 });
+                updateCloudStatusUI('connected');
+                if (!silent) {
+                    showToast('✅ ບັນທຶກຂຶ້ນ Cloud ສຳເລັດ! ທຸກຄົນເຫັນຂໍ້ມູນໃໝ່ແລ້ວ');
+                }
             } catch (err) {
-                console.info("Cloud push skipped (saved locally):", err.code);
+                updateCloudStatusUI('error', `Write Error: ${err.code}`);
+                console.error("Cloud push error:", err);
+                showToast(`❌ ສົ່ງຂໍ້ມູນຂຶ້ນ Cloud ບໍ່ສຳເລັດ (${err.code}) - ກວດສອບ Firestore Rules`, true);
             }
         }
 
         window.pushDataToCloudGlobal = pushDataToCloud;
 
-        window.addEventListener('load', () => {
-            initCloudSync();
-        });
+        // ເລີ່ມເຊື່ອມຕໍ່ Cloud ທັນທີທີ່ໂຫຼດໜ້າເວັບ
+        initCloudSync();
     </script>
 </body>
 </html>
